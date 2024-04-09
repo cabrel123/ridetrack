@@ -1,0 +1,338 @@
+<template>
+  <div class="page page-settings">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Paramètres du compte</div>
+      </div>
+    </div>
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom">
+      <div class="toolbar-inner">
+        <a href="/home/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">house</i>
+          <i class="icon material-icons md-only font-size-35">home</i>
+          <span class="tabbar-label font-size-17">Accueil</span>
+        </a>
+        <a href="#" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">placemark</i>
+          <i class="icon material-icons md-only font-size-35">location_on</i>
+          <span class="tabbar-label font-size-17">Tracking</span>
+        </a>
+        <a href="#" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35"
+            >exclamationmark_triangle</i
+          >
+          <i class="icon material-icons md-only font-size-35">warning_amber</i>
+          <span class="tabbar-label font-size-17">Alerte</span>
+        </a>
+        <a href="/settings/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
+          <i class="icon material-icons md-only font-size-35">settings</i>
+          <span class="tabbar-label font-size-17">Paramètres</span>
+        </a>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <span class="img-profile">
+            <img src="img/img5.png" width="100" />
+          </span>
+          <span class="img-icon">
+            <a class="popup-open" data-popup=".demo-popup-swipe-handler">
+              <i class="icon f7-icons if-not-md">camera_fill</i>
+              <i class="icon material-icons md-only color-yellow"
+                >photo_camera</i
+              >
+            </a>
+          </span>
+
+          <h3 class="username"></h3>
+          <h4>Statut de l'abonnement : <span class="status"></span></h4>
+        </div>
+        <div
+          class="list inset list-dividers-ios components-list searchbar-found"
+        >
+          <ul>
+            <li class="margin-bottom-20">
+              <a class="item-content item-link" href="/profile/">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md color-yellow">person</i>
+                  <i class="icon material-icons md-only color-yellow"
+                    >person_outline</i
+                  >
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">Mon profil</div>
+                </div>
+              </a>
+            </li>
+            <li class="margin-bottom-20">
+              <a class="item-content item-link" href="/my-contact/">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md color-yellow"
+                    >person_crop_rectangle</i
+                  >
+                  <i class="icon material-icons md-only color-yellow"
+                    >contact_mail</i
+                  >
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">Contacts d'urgence</div>
+                </div>
+              </a>
+            </li>
+            <li class="margin-bottom-20">
+              <a class="item-content item-link" href="/subscription/">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md color-yellow">cart_fill</i>
+                  <i class="icon material-icons md-only color-yellow"
+                    >shopping_cart</i
+                  >
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">Abonnement</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="block text-align-center">
+          <a @click="${logout}" class="color-black">
+            <i class="icon f7-icons if-not-md font-size-35"
+              >square_arrow_right</i
+            >
+            <i class="icon material-icons md-only font-size-35">exit_to_app</i>
+            <h4>Déconnexion</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="popup demo-popup-swipe-handler">
+      <div class="page">
+        <div class="swipe-handler"></div>
+        <div class="page-content">
+          <div class="block-title block-title-large">
+            Mettez à jour votre photo de profil
+          </div>
+          <div class="block block-strong-ios block-outline-ios">
+            <div class="grid grid-cols-2 grid-gap">
+              <div class="bloc-img text-align-center">
+                <a
+                  id="capturePhoto"
+                  @click="${capturePhoto}"
+                  class="color-black"
+                >
+                  <span class="display-block">
+                    <img src="img/camera2.png" width="100" />
+                  </span>
+
+                  <span class="display-block">Prendre une photo</span>
+                </a>
+              </div>
+              <div class="bloc-img text-align-center">
+                <a
+                  id="chooseFromGallery"
+                  @click="${chooseFromGallery}"
+                  class="color-black"
+                >
+                  <span class="display-block">
+                    <img src="img/gallery.jpg" width="100" />
+                  </span>
+
+                  <span class="display-block">Choisir depuis la galerie</span>
+                </a>
+              </div>
+            </div>
+
+            <div id="imagePreview"></div>
+            <div class="list inset">
+              <ul>
+                <li>
+                  <a
+                    id="uploadPhoto"
+                    class="button button-fill color-black list-button"
+                  >
+                    Valider
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fab fab-extended fab-center-bottom">
+      <a href="#" class="btn-scan">
+        <img src="img/icon-qrcode.png" class="img-scan" />
+      </a>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+  .bloc-img {
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 7px 7px 22px #c6c6c6, -7px -7px 22px #ffffff;
+  }
+</style>
+<script>
+  export default (
+    props,
+    { $, $f7, $on, $f7router, $onMounted, $onBeforeUnmount }
+  ) => {
+    let popupSwipeHandler;
+    $on("pageInit", () => {
+      let firstname = localStorage.getItem("firstname");
+      let lastname = localStorage.getItem("lastname");
+      let status = localStorage.getItem("status");
+      if (status == 1) {
+        $(".status").html("<span class='text-color-green'>actif</span>");
+      } else if (status == 2) {
+        $(".status").html("<span class='text-color-red'>actif</span>");
+      } else {
+        $(".status").html("<span class='text-color-yellow'>non actif</span>");
+      }
+      $(".username").html(firstname + " " + lastname);
+    });
+
+    // Événement de capture de photo
+    const capturePhoto = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+      });
+
+      function onSuccess(imageURI) {
+        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la capture de photo : " + message);
+      }
+    };
+
+    // Événement de sélection de photo depuis la galerie
+    const chooseFromGallery = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      });
+
+      function onSuccess(imageURI) {
+        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la sélection de photo : " + message);
+      }
+    };
+
+    // Événement de téléchargement de photo
+    const uploadPhoto = () => {
+      var imageURI = $("#imagePreview img").attr("src");
+
+      if (!imageURI) {
+        app.dialog.alert("Veuillez d'abord choisir une photo");
+        return;
+      }
+
+      // Afficher l'indicateur de chargement
+      var loader = app.dialog.progress("Téléchargement en cours...", 0);
+
+      var formData = new FormData();
+      formData.append("photo", imageURI);
+
+      fetch(apiUrl + "/api/user/uploadphoto", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          // Cacher l'indicateur de chargement une fois la réponse reçue
+          loader.close();
+
+          if (!response.ok) {
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          app.dialog.alert(
+            "Photo téléversée avec succès. Chemin de l'image : " + data.path
+          );
+        })
+        .catch((error) => {
+          // Cacher l'indicateur de chargement en cas d'erreur
+          loader.close();
+
+          app.dialog.alert(
+            "Erreur lors du téléversement de la photo : " + error.message
+          );
+        });
+
+      // Gérer l'événement de progression
+      const progressHandler = (event) => {
+        // Calculer le pourcentage de progression
+        var percentComplete = Math.round((event.loaded / event.total) * 100);
+
+        // Mettre à jour l'indicateur de chargement avec le pourcentage
+        loader.update(progressHandler, percentComplete);
+      };
+    };
+
+    const logout = () => {
+      const token = localStorage.getItem("token");
+
+      // API endpoint for creating a new user
+
+      // Make a POST request using the Fetch API
+      fetch(apiUrl + "/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((newUserData) => {
+          localStorage.clear();
+          app.dialog.alert("Déconnexion effectuée avec succès !");
+
+          app.views.main.router.navigate("/login/");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    $onMounted(() => {
+      popupSwipeHandler = $f7.popup.create({
+        el: ".demo-popup-swipe-handler",
+        swipeToClose: "to-bottom",
+        swipeHandler: ".swipe-handler",
+      });
+    });
+
+    $onBeforeUnmount(() => {
+      // Destroy popup when page removed
+      if (popupSwipeHandler) popupSwipeHandler.destroy();
+    });
+
+    return $render;
+  };
+</script>

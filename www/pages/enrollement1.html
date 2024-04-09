@@ -1,0 +1,259 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mon enrollement</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <img src="img/logo.png" />
+        </div>
+        <h3 class="text-align-center">Entrez vos informations SVP</h3>
+        <form id="register-form" method="post">
+          <div class="list">
+            <ul>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Nom(s) <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Nom(s)"
+                      id="firstname"
+                      name="firstname"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">Prenom(s)</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Prenom(s)"
+                      id="lastname"
+                      name="lastname"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    N° de téléphone <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="tel"
+                      placeholder="N° de téléphone"
+                      id="phone"
+                      name="phone"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">E-mail</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="email"
+                      placeholder="E-mail"
+                      id="email"
+                      name="email"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">Ville</div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                    <select
+                      name="town_id"
+                      id="user-town"
+                      class="townList"
+                      placeholder="Please choose..."
+                    >
+                      <option id="user-townName"></option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Numéro de capacité <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="N° de capacité"
+                      id="driver_capacity"
+                      name="driver_capacity"
+                      class=""
+                      required
+                      validate
+                    />
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="list inset">
+            <ul>
+              <li>
+                <button
+                  type="submit"
+                  class="button button-fill color-black list-button button-round"
+                  @click="${signUp}"
+                >
+                  Suivant
+                </button>
+              </li>
+            </ul>
+            <div class="block-footer text-align-center">
+              En continuant, vous accepter les
+              <a href="/cgu/"> termes et CGU</a>.
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+</style>
+<script>
+  export default (props, { $f7, $theme, $on, $f7router }) => {
+    let toastTop;
+    $on("pageInit", () => {
+      getTown();
+    });
+
+    const getTown = () => {
+      // Specify the API endpoint for user data
+      let content = "";
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/town")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((town) => {
+          // Process the retrieved user data
+          //console.log("town Data:", town);
+          var content = "";
+          var maxRow = town.length;
+
+          var i = "";
+          content += '<option value="">';
+          content += "Choisir";
+          content += "</option>";
+
+          for (i = 0; i < maxRow; i++) {
+            content += '<option value="' + town[i]["town_id"] + '">';
+            content += "" + town[i]["town_name"] + "";
+            content += "</option>";
+            content += "<br/>";
+          }
+
+          $(".townList").append(content);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    const signUp = (e) => {
+      $f7.dialog.preloader("Un instant svp...");
+      // Récupérer l'élément formulaire
+      var registerForm = document.getElementById("register-form");
+      e.preventDefault(); // Empêcher le formulaire de soumettre normalement
+      var firstnameInput = registerForm.querySelector(
+        'input[name="firstname"]'
+      );
+      var lastnameInput = registerForm.querySelector('input[name="lastname"]');
+      var driver_capacityInput = registerForm.querySelector(
+        'input[name="driver_capacity"]'
+      );
+      var phoneInput = registerForm.querySelector('input[name="phone"]');
+
+      var firstname = firstnameInput.value.trim();
+      var driver_capacity = driver_capacityInput.value.trim();
+      var phone = phoneInput.value.trim();
+
+      if (!driver_capacity || !phone || !firstname) {
+        $f7.dialog.close();
+        // Create toast
+
+        toastTop = $f7.toast.create({
+          text: "Veuillez remplir tous les champs.",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+
+        return;
+      }
+
+      var firstname = firstnameInput.value;
+      var lastname = lastnameInput.value;
+      var phone = phoneInput.value;
+      var email = firstnameInput.value + "@test.com";
+      var password = phone;
+      var driver_capacity = driver_capacityInput.value;
+
+      localStorage.setItem("firstname", firstname);
+      localStorage.setItem("lastname", lastname);
+      localStorage.setItem("driver_capacity", driver_capacity);
+      localStorage.setItem("phone", phone);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+
+      app.views.main.router.navigate("/enrollement2/");
+    };
+
+    $on("pageBeforeOut", () => {
+      $f7.toast.close();
+    });
+
+    $on("pageBeforeRemove", () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+    });
+
+    return $render;
+  };
+</script>

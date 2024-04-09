@@ -1,0 +1,438 @@
+<template>
+  <div class="page page-alert">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Alerte</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <h3>
+            Vous vous trouvez en situation de panique ? cliquez sur le bouton
+            qui correspond à votre situation d'urgence.
+          </h3>
+        </div>
+
+        <div class="card margin-bottom-40">
+          <div class="card-content text-align-center">
+            <button @click="${dangerAlert}">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front text">
+                <i class="icon f7-icons if-not-md font-size-35"
+                  >exclamationmark_triangle</i
+                >
+                <i class="icon material-icons md-only font-size-35"
+                  >warning_amber</i
+                >
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="card margin-bottom-40">
+          <div class="card-content text-align-center">
+            <button @click="${dangerAlert2}">
+              <span class="shadow"></span>
+              <span class="edge2"></span>
+              <span class="front2 text">
+                <i class="icon f7-icons if-not-md font-size-35"
+                  >exclamationmark_triangle</i
+                >
+                <i class="icon material-icons md-only font-size-35"
+                  >warning_amber</i
+                >
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="card margin-bottom-40">
+          <div class="card-content text-align-center">
+            <button @click="${dangerAlert3}">
+              <span class="shadow"></span>
+              <span class="edge3"></span>
+              <span class="front3 text">
+                <i class="icon f7-icons if-not-md font-size-35"
+                  >exclamationmark_triangle</i
+                >
+                <i class="icon material-icons md-only font-size-35"
+                  >warning_amber</i
+                >
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="block-title">Code couleur</div>
+        <div class="list list-strong-ios list-outline-ios list-dividers-ios">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Danger agression</div>
+                  <div class="item-after">
+                    <span class="badge color-red text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Détour dangereux</div>
+                  <div class="item-after">
+                    <span class="badge color-orange text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Chauffeur suspect</div>
+                  <div class="item-after">
+                    <span class="badge color-blue text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-40 {
+    margin-bottom: 40px;
+  }
+  .text-color-transparent {
+    color: transparent !important;
+  }
+
+  .page-alert button {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 14px;
+    transition: filter 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    width: 150px;
+    margin: 0 auto;
+    animation: jello-horizontal 2.9s both infinite;
+  }
+
+  .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(
+      to left,
+      hsl(340deg 100% 16%) 0%,
+      hsl(340deg 100% 32%) 8%,
+      hsl(340deg 100% 32%) 92%,
+      hsl(340deg 100% 16%) 100%
+    );
+  }
+
+  .front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-14px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .edge2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(
+      to left,
+      hsl(46, 84%, 51%) 0%,
+      hsl(51, 100%, 32%) 8%,
+      hsl(44, 100%, 32%) 92%,
+      hsl(49, 100%, 16%) 100%
+    );
+  }
+
+  .front2 {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(41, 100%, 47%);
+    will-change: transform;
+    transform: translateY(-14px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .edge3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(
+      to left,
+      hsl(204, 84%, 51%) 0%,
+      hsl(209, 100%, 32%) 8%,
+      hsl(204, 100%, 32%) 92%,
+      hsl(199, 100%, 16%) 100%
+    );
+  }
+
+  .front3 {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(197, 100%, 47%);
+    will-change: transform;
+    transform: translateY(-14px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .page-alert button:hover {
+    filter: brightness(110%);
+  }
+
+  .page-alert button:hover .front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+  }
+
+  .page-alert button:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+  }
+
+  .page-alert button:hover .shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+  }
+
+  .page-alert button:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+  }
+
+  .page-alert button:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @keyframes jello-horizontal {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+      transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+</style>
+<script>
+  export default (props, { $, $f7, $f7router }) => {
+    let toastTop;
+    let userId = localStorage.getItem("userId");
+    let driver = localStorage.getItem("driver");
+
+    const dangerAlert = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ status: "1", driver: driver, userId: userId }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: "Votre signalement a été envoyé avec succès !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const dangerAlert2 = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ status: "2", driver: driver, userId: userId }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: "Votre signalement a été envoyé avec succès !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const dangerAlert3 = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ status: "3", driver: driver, userId: userId }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: "Votre signalement a été envoyé avec succès !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    return $render;
+  };
+</script>

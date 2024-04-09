@@ -1,0 +1,221 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mon enrollement</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <form id="register-form" method="post">
+          <div class="block text-align-center">
+            <span class="img-profile">
+              <img src="img/img5.png" width="100" />
+            </span>
+            <span class="img-icon">
+              <a class="sheet-open" data-sheet=".demo-sheet-swipe-to-close">
+                <i class="icon f7-icons if-not-md">camera_fill</i>
+                <i class="icon material-icons md-only color-yellow"
+                  >photo_camera</i
+                >
+              </a>
+            </span>
+          </div>
+
+          <div class="block list inset">
+            <ul>
+              <li>
+                <a
+                  class="button button-fill button-round color-black list-button sheet-open"
+                  data-sheet=".demo-sheet-swipe-to-close"
+                  >Choisir une photo</a
+                >
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="sheet-modal demo-sheet-swipe-to-close" style="height: auto">
+      <div class="sheet-modal-inner">
+        <div class="swipe-handler"></div>
+        <div class="page-content">
+          <div class="block-title block-title-large">
+            Enregistrez votre photo de profil
+          </div>
+          <div class="block block-strong-ios block-outline-ios">
+            <div class="grid grid-cols-2 grid-gap">
+              <div class="bloc-img text-align-center">
+                <a
+                  id="capturePhoto"
+                  @click="${capturePhoto}"
+                  class="color-black"
+                >
+                  <span class="display-block">
+                    <img src="img/camera2.png" width="100" />
+                  </span>
+
+                  <span class="display-block">Prendre une photo</span>
+                </a>
+              </div>
+              <div class="bloc-img text-align-center">
+                <a
+                  id="chooseFromGallery"
+                  @click="${chooseFromGallery}"
+                  class="color-black"
+                >
+                  <span class="display-block">
+                    <img src="img/gallery.jpg" width="100" />
+                  </span>
+
+                  <span class="display-block">Choisir depuis la galerie</span>
+                </a>
+              </div>
+            </div>
+
+            <div id="imagePreview"></div>
+            <div class="list inset">
+              <ul>
+                <li>
+                  <a
+                    id="uploadPhoto"
+                    class="button button-fill color-black list-button"
+                  >
+                    Valider
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+</style>
+<script>
+  export default (props, { $f7, $theme, $on, $f7router }) => {
+    let toastTop;
+    let sheetSwipeToClose;
+    const toggleSwipeStep = () => {
+      sheetSwipeToStep.stepToggle();
+    };
+
+    $on("pageInit", () => {
+      $f7.dialog.close();
+      sheetSwipeToClose = $f7.sheet.create({
+        el: ".demo-sheet-swipe-to-close",
+        swipeToClose: true,
+        push: true,
+        backdrop: true,
+      });
+    });
+
+    // Événement de capture de photo
+    const capturePhoto = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+      });
+
+      function onSuccess(imageURI) {
+        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la capture de photo : " + message);
+      }
+    };
+
+    // Événement de sélection de photo depuis la galerie
+    const chooseFromGallery = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      });
+
+      function onSuccess(imageURI) {
+        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la sélection de photo : " + message);
+      }
+    };
+
+    // Événement de téléchargement de photo
+    const uploadPhoto = () => {
+      var imageURI = $("#imagePreview img").attr("src");
+
+      if (!imageURI) {
+        app.dialog.alert("Veuillez d'abord choisir une photo");
+        return;
+      }
+
+      // Afficher l'indicateur de chargement
+      var loader = app.dialog.progress("Téléchargement en cours...", 0);
+
+      var formData = new FormData();
+      formData.append("photo", imageURI);
+
+      fetch(apiUrl + "/api/user/uploadphoto", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          // Cacher l'indicateur de chargement une fois la réponse reçue
+          loader.close();
+
+          if (!response.ok) {
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          app.dialog.alert(
+            "Photo téléversée avec succès. Chemin de l'image : " + data.path
+          );
+        })
+        .catch((error) => {
+          // Cacher l'indicateur de chargement en cas d'erreur
+          loader.close();
+
+          app.dialog.alert(
+            "Erreur lors du téléversement de la photo : " + error.message
+          );
+        });
+
+      // Gérer l'événement de progression
+      const progressHandler = (event) => {
+        // Calculer le pourcentage de progression
+        var percentComplete = Math.round((event.loaded / event.total) * 100);
+
+        // Mettre à jour l'indicateur de chargement avec le pourcentage
+        loader.update(progressHandler, percentComplete);
+      };
+    };
+
+    $on("pageBeforeOut", () => {
+      $f7.toast.close();
+    });
+
+    $on("pageBeforeRemove", () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+      if (sheetSwipeToClose) sheetSwipeToClose.destroy();
+    });
+
+    return $render;
+  };
+</script>

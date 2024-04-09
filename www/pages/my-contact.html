@@ -1,0 +1,228 @@
+<template>
+  <div class="page page-my-contact">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mes contacts d'urgences</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <h3>
+          Un contact d'urgence est la personne qui recevra une notification par
+          SMS ou par appel à chaque fois que vous allez vous sentir en danger
+          dans un taxi.
+        </h3>
+        <p>Ci-dessous la liste de vos contacts d'urgence.</p>
+      </div>
+      <div class="demo-expandable-cards contactList"></div>
+    </div>
+    <div class="fab fab-right-bottom">
+      <a href="/add-contact/" class="bg-color-lime">
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon material-icons md-only">add</i>
+      </a>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, { $f7, $f7router, $on }) => {
+    let toastTop;
+    $on("pageInit", () => {
+      myContact();
+    });
+    const removeContact = (contactId) => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/contacts/remove", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ contactId: contactId }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: "Contact supprimé avec succès !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+          $("#card" + contactId).hide("slow");
+          app.views.main.router.navigate("/my-contact/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const myContact = () => {
+      // Specify the API endpoint for user data
+
+      let content = "";
+      let userId = localStorage.getItem("userId");
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/contacts/mycontact/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          var content = "";
+
+          var maxRow = data.length;
+
+          var i = "";
+          if (maxRow == 0) {
+            content += '<div class="card card-outline margin-top">';
+            content +=
+              "<div class=\"card-content card-content-padding\">Vous n'avez enregistré aucun contact d'urgence pour le moment !</div>";
+            content += "</div>";
+          } else {
+            for (i = 0; i < maxRow; i++) {
+              content +=
+                ' <div class="card card-expandable" id="card' +
+                data[i]["id"] +
+                '">';
+              content += '<div class="card-content">';
+              content +=
+                '<div style="background: url(./img/contact.jpg) no-repeat center top; background-size: cover; height: 300px;">';
+              content +=
+                '<div class="card-header text-color-black">' +
+                data[i]["firstname"] +
+                " " +
+                data[i]["lastname"] +
+                "</div>";
+              content +=
+                '<a class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">';
+              content += '<i class="icon f7-icons">xmark_circle_fill</i>';
+              content += "</a>";
+              content += "</div>";
+              content += '<div class="card-content-padding">';
+              content += '<div class="list media-list no-safe-areas">';
+              content += "<ul>";
+              content += '<li class="item-content">';
+              content += '<div class="item-media">';
+              content += '<i class="icon f7-icons if-not-md">person</i>';
+              content +=
+                '<i class="icon material-icons md-only">person_outline</i>';
+              content += "</div>";
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content += '<div class="item-title">Nom(s)</div>';
+              content += " </div>";
+              content += "</div>";
+              content +=
+                '<div class="item-after">' +
+                data[i]["firstname"] +
+                " " +
+                data[i]["lastname"] +
+                "</div>";
+              content += "</li>";
+              content += '<li class="item-content">';
+              content += '<div class="item-media">';
+              content += '<i class="icon f7-icons if-not-md">phone</i>';
+              content += '<i class="icon material-icons md-only">call</i>';
+              content += "</div>";
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content += '<div class="item-title">Téléphone</div>';
+              content += "</div>";
+              content += "</div>";
+              content +=
+                '<div class="item-after">' + data[i]["phone"] + "</div>";
+              content += "</li>";
+              content += '<li class="item-content">';
+              content += '<div class="item-media">';
+              content += '<i class="icon f7-icons if-not-md">at</i>';
+              content += '<i class="icon material-icons md-only">pin_drop</i>';
+              content += "</div>";
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content += '<div class="item-title">E-mail</div>';
+              content += "</div>";
+              content += "</div>";
+              content +=
+                ' <div class="item-after">' + data[i]["email"] + "</div>";
+              content += "</li>";
+              content += '<li class="item-content">';
+              content += '<div class="item-media">';
+              content += '<i class="icon f7-icons if-not-md">map</i>';
+              content +=
+                '<i class="icon material-icons md-only">location_on</i>';
+              content += "</div>";
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content += '<div class="item-title">Ville</div>';
+              content += "</div>";
+              content += " </div>";
+              content +=
+                '<div class="item-after">' + data[i]["townName"] + "</div>";
+              content += "</li>";
+              content += "</ul>";
+              content += ' <p class="text-align-center block">';
+              content +=
+                '<a class="button button-fill button-round button-large color-red text-color-white card-close remove-contact-button"  data-contact-id="' +
+                data[i]["id"] +
+                '">Supprimer le contact</a>';
+              content += " </p>";
+              content += "</div>";
+              content += "</div>";
+              content += "</div>";
+              content += "</div>";
+            }
+          }
+          $(".contactList").html(content);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    // Attacher un gestionnaire d'événements à un élément parent, par exemple, le document
+    document.addEventListener("click", function (event) {
+      // Vérifier si l'élément cliqué est celui que vous recherchez
+      if (event.target && event.target.matches(".remove-contact-button")) {
+        // Extraire l'ID du contact à partir des attributs de données ou d'autres attributs de l'élément
+        let contactId = event.target.getAttribute("data-contact-id");
+
+        // Appeler la fonction removeContact avec l'ID du contact
+        removeContact(contactId);
+      }
+    });
+
+    return $render;
+  };
+</script>

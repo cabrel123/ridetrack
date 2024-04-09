@@ -1,0 +1,93 @@
+<template>
+  <div class="page page-history">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Historique</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <h3>Historique des paiements</h3>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">TR #120SSR</div>
+                    </div>
+                    <div class="item-subtitle">Type : 1 semaine</div>
+                    <div class="item-subtitle">
+                      Statut : <span class="text-color-green">validé</span>
+                    </div>
+                  </div>
+                  <div class="display-block item-after text-align-right">
+                    <span>500 FCFA</span>
+                    <br />
+                    <span>10 Avr 2024 10:25</span>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">TR #120SSR</div>
+                    </div>
+                    <div class="item-subtitle">Type : 1 semaine</div>
+                    <div class="item-subtitle">
+                      Statut : <span class="text-color-green">validé</span>
+                    </div>
+                  </div>
+                  <div class="display-block item-after text-align-right">
+                    <span>500 FCFA</span>
+                    <br />
+                    <span>10 Avr 2024 10:25</span>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">TR #120SSR</div>
+                    </div>
+                    <div class="item-subtitle">Type : 1 semaine</div>
+                    <div class="item-subtitle">
+                      Statut : <span class="text-color-green">validé</span>
+                    </div>
+                  </div>
+                  <div class="display-block item-after text-align-right">
+                    <span>500 FCFA</span>
+                    <br />
+                    <span>10 Avr 2024 10:25</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+</style>
+<script>
+  export default (props, { $, $f7, $f7router }) => {
+    const verifyPhone = () => {
+      app.views.main.router.navigate("/home/");
+    };
+
+    return $render;
+  };
+</script>

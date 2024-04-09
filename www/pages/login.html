@@ -1,0 +1,232 @@
+<template>
+  <div class="page page-login">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link" href="/welcome/">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Se connecter</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <img src="img/logo.png" />
+        </div>
+
+        <form id="login-form" method="post">
+          <div class="list">
+            <ul>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    N° de téléphone <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="tel"
+                      placeholder="N° de téléphone"
+                      id="phone"
+                      name="phone"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Mot de passe <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="password"
+                      placeholder="Mot de passe"
+                      id="password"
+                      class=""
+                      name="password"
+                      required
+                      validate
+                    />
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="list inset">
+            <ul>
+              <li>
+                <button
+                  type="submit"
+                  class="button button-fill color-black list-button button-round"
+                  @click="${signIn}"
+                >
+                  Connexion
+                </button>
+              </li>
+            </ul>
+            <div class="block-footer text-align-center">
+              <a href="/forgot-password/">Mot de pass oublié ?</a>.
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+  .page-login .page-content {
+    padding-top: calc(
+      var(--f7-page-navbar-offset, 0px) +
+        var(--f7-page-toolbar-top-offset, 172px) +
+        var(--f7-page-subnavbar-offset, 0px) +
+        var(--f7-page-searchbar-offset, 0px) +
+        var(--f7-page-content-extra-padding-top, 0px)
+    );
+  }
+</style>
+<script>
+  export default (props, { $f7, $theme, $on, $f7router }) => {
+    let toastTop;
+    const signIn = (e) => {
+      $f7.dialog.preloader("Un instant svp...");
+      // Récupérer l'élément formulaire
+      var loginForm = document.getElementById("login-form");
+      e.preventDefault(); // Empêcher le formulaire de soumettre normalement
+
+      var phoneInput = loginForm.querySelector('input[name="phone"]');
+      var passwordInput = loginForm.querySelector('input[name="password"]');
+
+      var phone = phoneInput.value.trim();
+      var password = passwordInput.value.trim();
+
+      if (!password || !phone) {
+        $f7.dialog.close();
+        // Create toast
+
+        toastTop = $f7.toast.create({
+          text: "Veuillez remplir tous les champs.",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+        return;
+      }
+
+      // Récupérer les valeurs des champs
+      var formData = new FormData(loginForm);
+
+      // Créez un objet JavaScript pour stocker les données
+      let formDataObj = {};
+
+      // Parcourez les paires clé/valeur de formData pour les ajouter à formDataObj
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      });
+
+      // Convertissez formDataObj en JSON
+      const formDataJSON = JSON.stringify(formDataObj);
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: formDataJSON,
+      })
+        .then(function (response) {
+          if (response.status === 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+          } else {
+            if (!response.ok) {
+              $f7.dialog.close();
+
+              throw new Error("Erreur HTTP, statut " + response.status);
+            }
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          $f7.dialog.close();
+
+          // Traiter la réponse de l'API (par exemple, afficher un message de succès)
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: "Connexion réussie !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+
+          localStorage.setItem("userId", data.user[0].id);
+          localStorage.setItem("firstname", data.user[0].firstname);
+          localStorage.setItem("lastname", data.user[0].lastname);
+          localStorage.setItem("gender", data.user[0].gender);
+          localStorage.setItem("dateofbirth", data.user[0].dateofbirth);
+          localStorage.setItem("status", data.user[0].status);
+          localStorage.setItem("townName", data.user[0].townName);
+          localStorage.setItem("town_id", data.user[0].town_id);
+          localStorage.setItem("districtName", data.user[0].districtName);
+          localStorage.setItem("profilePhoto", data.user[0].profilePhoto);
+          localStorage.setItem("cniRecto", data.user[0].cni_recto);
+          localStorage.setItem("cniVerso", data.user[0].cni_verso);
+          localStorage.setItem("type", data.user[0].type);
+          localStorage.setItem("status", data.user[0].status);
+          localStorage.setItem("phone", data.user[0].phone);
+          localStorage.setItem("email", data.user[0].email);
+          localStorage.setItem("token", data.accessToken);
+
+          app.views.main.router.navigate("/home/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    $on("pageBeforeOut", () => {
+      $f7.toast.close();
+    });
+
+    $on("pageBeforeRemove", () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+    });
+
+    return $render;
+  };
+</script>

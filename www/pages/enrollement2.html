@@ -1,0 +1,231 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mon enrollement</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <img src="img/logo.png" />
+        </div>
+        <h3 class="text-align-center">Entrez vos informations SVP</h3>
+        <form id="register-form3" method="post">
+          <div class="list">
+            <ul>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Modèle de voiture <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Voiture"
+                      id="car"
+                      name="car"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Immatriculation <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="N° Immatriculation"
+                      id="immatriculation_number"
+                      name="immatriculation_number"
+                      class=""
+                      required
+                      validate
+                    />
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Etes-vous le propriétaire ?
+                    <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                    <select
+                      name="owner"
+                      id="owner"
+                      placeholder="Please choose..."
+                    >
+                      <option value="">Choisir</option>
+                      <option value="1">Oui</option>
+                      <option value="2">Non</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="item-content item-input item-input-with-value"
+                id="owner1"
+                style="display: none"
+              >
+                <div class="item-inner">
+                  <div class="item-title item-label">Nom du propriétaire</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="texte"
+                      placeholder="Nom du propriétaire"
+                      id="owner_name"
+                      name="owner_name"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="item-content item-input item-input-with-value"
+                id="owner2"
+                style="display: none"
+              >
+                <div class="item-inner">
+                  <div class="item-title item-label">N° de téléphone</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="tel"
+                      placeholder="N° de téléphone"
+                      id="owner_phone"
+                      name="owner_phone"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="list inset">
+            <ul>
+              <li>
+                <button
+                  type="submit"
+                  class="button button-fill color-black list-button button-round"
+                  @click="${signUp}"
+                >
+                  Suivant
+                </button>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+</style>
+<script>
+  export default (props, { $f7, $theme, $on, $f7router }) => {
+    let toastTop;
+    $on("pageInit", () => {
+      $f7.dialog.close();
+
+      $("#owner").change(function () {
+        console.log("icici" + this.value);
+        var status = this.value;
+        console.log("val=" + $("#owner").val());
+
+        if (status == "1") {
+          $("#owner_name").show();
+          $("#owner_phone").show();
+        } else {
+          $("#owner_name").hide();
+          $("#owner_phone").hide();
+        }
+      });
+    });
+
+    const signUp = (e) => {
+      $f7.dialog.preloader("Un instant svp...");
+      // Récupérer l'élément formulaire
+      var registerForm = document.getElementById("register-form3");
+      e.preventDefault(); // Empêcher le formulaire de soumettre normalement
+      var carInput = registerForm.querySelector('input[name="car"]');
+      var immatriculation_numberInput = registerForm.querySelector(
+        'input[name="immatriculation_number"]'
+      );
+      var ownerInput = registerForm.querySelector('input[name="owner"]');
+      var ownerNameInput = registerForm.querySelector(
+        'input[name="owner_name"]'
+      );
+      var ownerPhoneInput = registerForm.querySelector(
+        'input[name="owner_phone"]'
+      );
+
+      var car = carInput.value.trim();
+      var immatriculation_number = immatriculation_numberInput.value.trim();
+      var owner = ownerInput.value.trim();
+
+      if (!car || !owner || !immatriculation_number) {
+        $f7.dialog.close();
+        // Create toast
+
+        toastTop = $f7.toast.create({
+          text: "Veuillez remplir tous les champs avec une étoile en rouge.",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+
+        return;
+      }
+
+      var car = carInput.value;
+      var immatriculation_number = immatriculation_numberInput.value;
+      var owner = ownerInput.value;
+      var owner_name = ownerNameInput.value;
+      var owner_phone = ownerPhoneInput.value;
+
+      localStorage.setItem("car", car);
+      localStorage.setItem("immatriculation_number", immatriculation_number);
+      localStorage.setItem("owner", owner);
+      localStorage.setItem("owner_name", owner_name);
+      localStorage.setItem("owner_phone", owner_phone);
+
+      app.views.main.router.navigate("/enrollement3/");
+    };
+
+    $on("pageBeforeOut", () => {
+      $f7.toast.close();
+    });
+
+    $on("pageBeforeRemove", () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+    });
+
+    return $render;
+  };
+</script>

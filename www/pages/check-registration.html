@@ -1,0 +1,45 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback page-welcome">
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <img src="img/logo.png" />
+        </div>
+
+        <h3 class="text-align-center">
+          Quel type de compte voulez-vous créer ?
+        </h3>
+        <p class="text-align-center block">
+          <a
+            class="button button-fill button-round color-black"
+            href="/register/"
+            >Passager</a
+          >
+        </p>
+        <p class="text-align-center block">
+          <a
+            class="button button-fill button-round button-raised color-white"
+            href="/enrollement1/"
+            >Chauffeur</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .page-welcome .page-content {
+    padding-top: calc(
+      var(--f7-page-navbar-offset, 0px) +
+        var(--f7-page-toolbar-top-offset, 172px) +
+        var(--f7-page-subnavbar-offset, 0px) +
+        var(--f7-page-searchbar-offset, 0px) +
+        var(--f7-page-content-extra-padding-top, 0px)
+    );
+  }
+</style>
+<script>
+  export default function (props, ctx) {
+    return $render;
+  }
+</script>

@@ -1,0 +1,202 @@
+<template>
+  <div class="page page-home">
+    <div class="navbar navbar-large navbar-transparent">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner navbar-inner-centered-title">
+        <div class="left">
+          <a class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons md-only">menu</i>
+          </a>
+        </div>
+        <div class="title sliding">Hello, Cabrel</div>
+        <div class="right padding">
+          <a href="/profile/">
+            <img src="img/img5.png" width="50" />
+          </a>
+        </div>
+        <div class="title-large">
+          <div class="title-large-text">
+            Hello, <span class="username"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom">
+      <div class="toolbar-inner">
+        <a href="/home/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">house</i>
+          <i class="icon material-icons md-only font-size-35">home</i>
+          <span class="tabbar-label font-size-17">Accueil</span>
+        </a>
+        <a href="#" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">placemark</i>
+          <i class="icon material-icons md-only font-size-35">location_on</i>
+          <span class="tabbar-label font-size-17">Tracking</span>
+        </a>
+        <a href="/alert/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35"
+            >exclamationmark_triangle</i
+          >
+          <i class="icon material-icons md-only font-size-35">warning_amber</i>
+          <span class="tabbar-label font-size-17">Alerte</span>
+        </a>
+        <a href="/settings/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
+          <i class="icon material-icons md-only font-size-35">settings</i>
+          <span class="tabbar-label font-size-17">Paramètres</span>
+        </a>
+      </div>
+    </div>
+    <div class="page-content">
+      <div
+        class="list list-strong inset list-dividers-ios searchbar-hide-on-search"
+      >
+        <div class="grid grid-cols-2 grid-gap">
+          <div class="card">
+            <div class="card-header bold-500">Signalements</div>
+            <div class="card-content card-content-padding font-size-24">0</div>
+          </div>
+          <div class="card">
+            <div class="card-header bold-500">Abonnement</div>
+            <div class="card-content card-content-padding font-size-24">
+              1 semaine
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block-title searchbar-found">Components</div>
+      <div
+        class="list list-strong inset list-dividers-ios components-list searchbar-found"
+      >
+        <ul>
+          <li>
+            <a class="item-content item-link" href="/accordion/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Accordion</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/action-sheet/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Action Sheet</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/area-chart/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Area Chart</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/autocomplete/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Autocomplete</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/badge/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Badge</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/breadcrumbs/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Breadcrumbs</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/buttons/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Buttons</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/calendar/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Calendar / Date Picker</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="item-content item-link" href="/cards/">
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">Cards</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="list list-strong inset simple-list searchbar-not-found">
+        <ul>
+          <li>Nothing found</li>
+        </ul>
+      </div>
+      <div class="block-title searchbar-hide-on-search">Themes</div>
+      <div
+        class="list list-strong inset list-dividers-ios searchbar-hide-on-search"
+      >
+        <ul>
+          <li>
+            <a href="./?theme=ios" class="external item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">iOS Theme</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="./?theme=md" class="external item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Material (MD) Theme</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/color-themes/" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Color Themes</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="fab fab-extended fab-center-bottom">
+      <a href="#" class="btn-scan">
+        <img src="img/icon-qrcode.png" class="img-scan" />
+      </a>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, { $, $f7, $on, $f7router }) => {
+    $on("pageInit", () => {
+      let firstname = localStorage.getItem("firstname");
+      let lastname = localStorage.getItem("lastname");
+
+      if (lastname) {
+        $(".username").html(lastname);
+      } else {
+        $(".username").html(firstname);
+      }
+    });
+    return $render;
+  };
+</script>

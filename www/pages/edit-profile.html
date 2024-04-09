@@ -1,0 +1,367 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Modifier le compte</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <form id="updateprofile-form" method="post">
+          <div class="list">
+            <ul>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Nom(s) <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Nom(s)"
+                      id="user-firstname"
+                      name="firstname"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">Prenom(s)</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Prenom(s)"
+                      id="user-lastname"
+                      name="lastname"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    N° de téléphone <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="tel"
+                      placeholder="N° de téléphone"
+                      id="user-phone"
+                      name="phone"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    E-mail <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="email"
+                      placeholder="E-mail"
+                      id="user-email"
+                      name="email"
+                      class="input-with-value"
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    Sexe <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                    <select
+                      name="gender"
+                      id="user-gender"
+                      placeholder="Please choose..."
+                    >
+                      <option value="1">Homme</option>
+                      <option value="2">Femme</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">Ville</div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                    <select
+                      name="town_id"
+                      id="user-town"
+                      class="townList"
+                      placeholder="Please choose..."
+                    >
+                      <option id="user-townName"></option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">Date de naissance</div>
+                  <div class="item-input-wrap">
+                    <input
+                      name="dateofbirth"
+                      type="date"
+                      id="user-birthday"
+                      placeholder="Please choose..."
+                    />
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Mot de passe</div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Mot de passe"
+                      id="user-password"
+                      class=""
+                    />
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="list inset">
+            <ul>
+              <li>
+                <button
+                  type="submit"
+                  class="button button-fill color-black list-button button-round"
+                  @click="${updateProfile}"
+                >
+                  Mettre à jour
+                </button>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+</style>
+<script>
+  export default (props, { $, $f7, $on, $f7router }) => {
+    let popupSwipeHandler;
+    let toastTop;
+
+    $on("pageInit", () => {
+      let firstname = localStorage.getItem("firstname");
+      let lastname = localStorage.getItem("lastname");
+      let email = localStorage.getItem("email");
+      let phone = localStorage.getItem("phone");
+      let gender = localStorage.getItem("gender");
+      let town_id = localStorage.getItem("town_id");
+      let townName = localStorage.getItem("townName");
+      let birthday = localStorage.getItem("dateofbirth");
+
+      $("#user-firstname").val(firstname);
+      $("#user-lastname").val(lastname);
+      $("#user-email").val(email);
+      $("#user-phone").val(phone);
+      $("#user-gender").val(gender);
+      $("#user-townName").val(town_id);
+      $("#user-townName").html(townName);
+      $("#user-birthday").val(birthday);
+      getTown();
+    });
+
+    const getTown = () => {
+      // Specify the API endpoint for user data
+      let content = "";
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/town")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((town) => {
+          // Process the retrieved user data
+          //console.log("town Data:", town);
+          var content = "";
+          var maxRow = town.length;
+
+          var i = "";
+          content += '<option value="">';
+          content += "Choisir";
+          content += "</option>";
+
+          for (i = 0; i < maxRow; i++) {
+            content += '<option value="' + town[i]["town_id"] + '">';
+            content += "" + town[i]["town_name"] + "";
+            content += "</option>";
+            content += "<br/>";
+          }
+
+          $(".townList").append(content);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    const updateProfile = (e) => {
+      $f7.dialog.preloader("Un instant svp...");
+      // Récupérer l'élément formulaire
+      var registerForm = document.getElementById("updateprofile-form");
+      e.preventDefault(); // Empêcher le formulaire de soumettre normalement
+      var firstnameInput = registerForm.querySelector(
+        'input[name="firstname"]'
+      );
+
+      var emailInput = registerForm.querySelector('input[name="email"]');
+      var phoneInput = registerForm.querySelector('input[name="phone"]');
+
+      var firstname = firstnameInput.value.trim();
+      var email = emailInput.value.trim();
+      var phone = phoneInput.value.trim();
+
+      let userId = localStorage.getItem("userId");
+
+      if (!email || !phone || !firstname) {
+        $f7.dialog.close();
+        // Create toast
+
+        toastTop = $f7.toast.create({
+          text: "Veuillez remplir les champs avec l'étoile rouge",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+
+        return;
+      }
+
+      // Récupérer les valeurs des champs
+      var formData = new FormData(registerForm);
+
+      // Créez un objet JavaScript pour stocker les données
+      let formDataObj = {};
+
+      // Parcourez les paires clé/valeur de formData pour les ajouter à formDataObj
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      });
+
+      // Convertissez formDataObj en JSON
+      const formDataJSON = JSON.stringify(formDataObj);
+
+      // Convertir le JSON en objet JavaScript
+      const jsonObject = JSON.parse(formDataJSON);
+
+      // Ajouter une nouvelle clé-valeur à l'objet JavaScript
+      jsonObject.userId = userId;
+
+      // Convertir l'objet JavaScript en JSON
+      const newJsonString = JSON.stringify(jsonObject);
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/updateprofile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: newJsonString,
+      })
+        .then(function (response) {
+          if (response.status === 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+          } else {
+            if (!response.ok) {
+              $f7.dialog.close();
+
+              throw new Error("Erreur HTTP, statut " + response.status);
+            }
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          $f7.dialog.close();
+
+          // Traiter la réponse de l'API (par exemple, afficher un message de succès)
+
+          toastTop = $f7.toast.create({
+            text: "Félicitations !!  Votre compte a été mis à jour",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+
+          localStorage.setItem("firstname", data.user[0].firstname);
+          localStorage.setItem("lastname", data.user[0].lastname);
+          localStorage.setItem("gender", data.user[0].gender);
+          localStorage.setItem("dateofbirth", data.user[0].dateofbirth);
+          localStorage.setItem("status", data.user[0].status);
+          localStorage.setItem("townName", data.user[0].townName);
+          localStorage.setItem("town_id", data.user[0].town_id);
+          localStorage.setItem("districtName", data.user[0].districtName);
+          localStorage.setItem("profilePhoto", data.user[0].profilePhoto);
+          localStorage.setItem("cniRecto", data.user[0].cni_recto);
+          localStorage.setItem("cniVerso", data.user[0].cni_verso);
+          localStorage.setItem("type", data.user[0].type);
+          localStorage.setItem("status", data.user[0].status);
+          localStorage.setItem("phone", data.user[0].phone);
+          localStorage.setItem("email", data.user[0].email);
+
+          app.views.main.router.navigate("/profile/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    return $render;
+  };
+</script>

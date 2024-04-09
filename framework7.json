@@ -1,0 +1,30 @@
+{
+  "cwd": "C:\\Projets\\ridetrack",
+  "type": [
+    "cordova"
+  ],
+  "name": "ridetrack",
+  "pkg": "io.framework7.myapp",
+  "framework": "core",
+  "template": "blank",
+  "bundler": false,
+  "cordova": {
+    "folder": "cordova",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "plugins": [
+      "cordova-plugin-statusbar",
+      "cordova-plugin-keyboard",
+      "cordova-plugin-splashscreen"
+    ]
+  },
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false
+}

@@ -1,0 +1,313 @@
+<template>
+  <div class="page page-subscription">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Abonnement</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <h4>
+            L'abonnement vous permet d'avoir accès en tout aux informations des
+            chauffeurs chaque fois que vous scannez le QRCode.
+          </h4>
+        </div>
+        <div class="grid">
+          <label class="card">
+            <input name="plan" class="radio" type="radio" checked />
+
+            <span class="plan-details">
+              <span class="plan-type">Starter</span>
+              <span class="plan-cost"
+                >500 FCFA<span class="slash">/</span
+                ><abbr class="plan-cycle" title="month">1 semaine</abbr></span
+              >
+            </span>
+          </label>
+          <label class="card">
+            <input name="plan" class="radio" type="radio" />
+
+            <span class="plan-details" aria-hidden="true">
+              <span class="plan-type">Pro</span>
+              <span class="plan-cost"
+                >1500 FCFA<span class="slash">/</span
+                ><span class="plan-cycle">1 mois</span></span
+              >
+            </span>
+          </label>
+          <label class="card">
+            <input name="plan" class="radio" type="radio" />
+
+            <span class="plan-details" aria-hidden="true">
+              <span class="plan-type">Advanced</span>
+              <span class="plan-cost"
+                >5000 FCFA<span class="slash">/</span
+                ><span class="plan-cycle">3 mois</span></span
+              >
+            </span>
+          </label>
+        </div>
+        <div class="toolbar tabbar">
+          <div class="toolbar-inner">
+            <a href="#tab-1" class="tab-link tab-link-active"
+              ><img src="img/om.png" width="50"
+            /></a>
+            <a href="#tab-2" class="tab-link"
+              ><img src="img/momo.png" width="50"
+            /></a>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div id="tab-1" class="tab tab-active">
+            <div class="block">
+              <form>
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input item-input-with-value">
+                      <div class="item-inner">
+                        <div class="item-title item-label">
+                          N° de compte Orange Money
+                        </div>
+                        <div class="item-input-wrap">
+                          <input
+                            type="tel"
+                            placeholder="N° de téléphone Orange money"
+                            id="phone"
+                            name="phone"
+                            class="input-with-value"
+                          />
+                          <span class="input-clear-button"></span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="list inset">
+                  <ul>
+                    <li>
+                      <a
+                        class="button button-fill color-black list-button"
+                        @click="${signIn}"
+                        >Valider</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="tab-2" class="tab">
+            <div class="block">
+              <form>
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input item-input-with-value">
+                      <div class="item-inner">
+                        <div class="item-title item-label">
+                          N° de compte MTN mobile Money
+                        </div>
+                        <div class="item-input-wrap">
+                          <input
+                            type="tel"
+                            placeholder="N° de téléphone MTN mobile Money"
+                            id="phone"
+                            name="phone"
+                            class="input-with-value"
+                          />
+                          <span class="input-clear-button"></span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="list inset">
+                  <ul>
+                    <li>
+                      <a
+                        class="button button-fill color-black list-button"
+                        @click="${signIn}"
+                        >Valider</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  :root {
+    --card-line-height: 1.2em;
+    --card-padding: 1em;
+    --card-radius: 0.5em;
+    --color-green: #558309;
+    --color-gray: #e2ebf6;
+    --color-dark-gray: #c4d1e1;
+    --radio-border-width: 2px;
+    --radio-size: 1.5em;
+  }
+  .md .tabbar-icons:not(.tabbar-icons) .tab-link-highlight,
+  .md .tabbar:not(.tabbar-icons) .tab-link-highlight {
+    top: 0px;
+  }
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+  .page-verify-phone .list input[type="text"] {
+    text-align: center;
+  }
+  .page-subscription .grid {
+    display: grid;
+    grid-gap: var(--card-padding);
+    margin: 0 auto;
+    max-width: 60em;
+    padding: 0;
+  }
+  @media (min-width: 42em) {
+    .page-subscription .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .page-subscription .card {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    position: relative;
+  }
+  .page-subscription .card:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+  }
+  .radio {
+    font-size: inherit;
+    margin: 0;
+    position: absolute;
+    right: calc(var(--card-padding) + var(--radio-border-width));
+    top: calc(var(--card-padding) + var(--radio-border-width));
+  }
+  @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+    .radio {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: #fff;
+      border: var(--radio-border-width) solid var(--color-gray);
+      border-radius: 50%;
+      cursor: pointer;
+      height: var(--radio-size);
+      outline: none;
+      transition: background 0.2s ease-out, border-color 0.2s ease-out;
+      width: var(--radio-size);
+    }
+    .radio::after {
+      border: var(--radio-border-width) solid #fff;
+      border-top: 0;
+      border-left: 0;
+      content: "";
+      display: block;
+      height: 0.75rem;
+      left: 25%;
+      position: absolute;
+      top: 50%;
+      transform: rotate(45deg) translate(-50%, -50%);
+      width: 0.375rem;
+    }
+    .radio:checked {
+      background: var(--color-green);
+      border-color: var(--color-green);
+    }
+    .page-subscription .card:hover .radio {
+      border-color: var(--color-dark-gray);
+    }
+    .page-subscription .card:hover .radio:checked {
+      border-color: var(--color-green);
+    }
+  }
+  .plan-details {
+    border: var(--radio-border-width) solid var(--color-gray);
+    border-radius: var(--card-radius);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: var(--card-padding);
+    transition: border-color 0.2s ease-out;
+  }
+  .page-subscription .card:hover .plan-details {
+    border-color: var(--color-dark-gray);
+  }
+  .radio:checked ~ .plan-details {
+    border-color: var(--color-green);
+  }
+  .radio:focus ~ .plan-details {
+    box-shadow: 0 0 0 2px var(--color-dark-gray);
+  }
+  .radio:disabled ~ .plan-details {
+    color: var(--color-dark-gray);
+    cursor: default;
+  }
+  .radio:disabled ~ .plan-details .plan-type {
+    color: var(--color-dark-gray);
+  }
+  .page-subscription .card:hover .radio:disabled ~ .plan-details {
+    border-color: var(--color-gray);
+    box-shadow: none;
+  }
+  .page-subscription .card:hover .radio:disabled {
+    border-color: var(--color-gray);
+  }
+  .plan-type {
+    color: var(--color-green);
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1em;
+  }
+  .plan-cost {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+  }
+  .slash {
+    font-weight: normal;
+  }
+  .plan-cycle {
+    font-size: 1.2rem;
+    font-variant: none;
+    border-bottom: none;
+    cursor: inherit;
+    text-decoration: none;
+  }
+  .hidden-visually {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+</style>
+<script>
+  export default (props, { $, $f7, $f7router }) => {
+    const signIn = () => {
+      app.views.main.router.navigate("/home/");
+    };
+
+    return $render;
+  };
+</script>

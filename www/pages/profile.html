@@ -1,0 +1,143 @@
+<template>
+  <div class="page page-profile">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Mon compte</div>
+        <div class="right">
+          <a href="/edit-profile/">
+            <i class="icon f7-icons if-not-md">pencil</i>
+            <i class="icon material-icons md-only">edit</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <span class="img-profile">
+            <img src="img/img5.png" width="100" />
+          </span>
+
+          <h3 class="username"></h3>
+          <h4>Statut de l'abonnement : <span class="status"></span></h4>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <ul>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">person</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Nom(s)</div>
+                    </div>
+                  </div>
+                  <div class="item-after username"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">phone</i>
+                    <i class="icon material-icons md-only">call</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Téléphone</div>
+                    </div>
+                  </div>
+                  <div class="item-after phone"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">at</i>
+                    <i class="icon material-icons md-only">pin_drop</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">E-mail</div>
+                    </div>
+                  </div>
+                  <div class="item-after email"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">rosette</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Sexe</div>
+                    </div>
+                  </div>
+                  <div class="item-after gender"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">map</i>
+                    <i class="icon material-icons md-only">location_on</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Ville</div>
+                    </div>
+                  </div>
+                  <div class="item-after town"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+</style>
+<script>
+  export default (
+    props,
+    { $, $f7, $on, $f7router, $onMounted, $onBeforeUnmount }
+  ) => {
+    $on("pageInit", () => {
+      let firstname = localStorage.getItem("firstname");
+      let lastname = localStorage.getItem("lastname");
+      let status = localStorage.getItem("status");
+      let phone = localStorage.getItem("phone");
+      let email = localStorage.getItem("email");
+      let townName = localStorage.getItem("townName");
+      let gender = localStorage.getItem("gender");
+      if (status == 1) {
+        $(".status").html("<span class='text-color-green'>actif</span>");
+      } else if (status == 2) {
+        $(".status").html("<span class='text-color-red'>actif</span>");
+      } else {
+        $(".status").html("<span class='text-color-yellow'>non actif</span>");
+      }
+      if (gender == 1) {
+        $(".gender").html("Homme");
+      } else if (gender == 2) {
+        $(".gender").html("Femme");
+      } else {
+        $(".gender").html("Non défini");
+      }
+      $(".username").html(firstname + " " + lastname);
+      $(".phone").html(phone);
+      $(".email").html(email);
+      $(".town").html(townName);
+    });
+
+    return $render;
+  };
+</script>
