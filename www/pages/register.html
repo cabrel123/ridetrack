@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -14,7 +15,7 @@
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
         <h3 class="text-align-center">Entrez vos informations SVP</h3>
         <form id="register-form" method="post">
@@ -75,9 +76,7 @@
               </li>
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
-                  <div class="item-title item-label">
-                    E-mail <span class="text-color-red">*</span>
-                  </div>
+                  <div class="item-title item-label">E-mail</div>
                   <div class="item-input-wrap">
                     <input
                       type="email"
@@ -155,12 +154,12 @@
       var emailInput = registerForm.querySelector('input[name="email"]');
       var phoneInput = registerForm.querySelector('input[name="phone"]');
       var passwordInput = registerForm.querySelector('input[name="password"]');
-      var firstname = firstnameInput.value.trim();
-      var email = emailInput.value.trim();
+      var email = firstnameInput.value + "@taxisur.net";
+
       var phone = phoneInput.value.trim();
       var password = passwordInput.value.trim();
 
-      if (!email || !password || !phone || !firstname) {
+      if (!password || !phone || !firstname) {
         $f7.dialog.close();
         // Create toast
 
@@ -178,6 +177,7 @@
       }
 
       var passwordVal = passwordInput.value;
+      var emailVal = emailInput.value;
 
       // Récupérer les valeurs des champs
       var formData = new FormData(registerForm);
@@ -198,6 +198,13 @@
 
       // Ajouter une nouvelle clé-valeur à l'objet JavaScript
       jsonObject.password_confirmation = passwordVal;
+      if (!emailVal) {
+        jsonObject.email = email;
+      } else {
+        jsonObject.email = emailVal;
+      }
+
+      jsonObject.town_id = 1;
 
       // Convertir l'objet JavaScript en JSON
       const newJsonString = JSON.stringify(jsonObject);
@@ -254,12 +261,17 @@
           localStorage.setItem("cniRecto", data.user[0].cni_recto);
           localStorage.setItem("cniVerso", data.user[0].cni_verso);
           localStorage.setItem("type", data.user[0].type);
-          localStorage.setItem("status", data.user[0].status);
+          localStorage.setItem(
+            "susbscription_status",
+            data.user[0].susbscription_status
+          );
           localStorage.setItem("phone", data.user[0].phone);
           localStorage.setItem("email", data.user[0].email);
+          localStorage.setItem("referal_code", data.user[0].referal_code);
+          localStorage.setItem("expired_date", data.user[0].expired_date);
           localStorage.setItem("token", data.accessToken);
 
-          sendSMSCode(data.user.phone);
+          sendSMSCode(data.user[0].phone);
         })
         .catch(function (error) {
           $f7.dialog.close();
@@ -297,6 +309,7 @@
           return response.json();
         })
         .then(function (data) {
+          localStorage.setItem("susbscription_status", "1");
           app.views.main.router.navigate("/verify-phone/");
         })
         .catch(function (error) {
@@ -308,7 +321,7 @@
           toastTop = $f7.toast.create({
             text: error,
             position: "top",
-            cssClass: "toast_green",
+            cssClass: "toast_red",
             closeTimeout: 3000,
           });
 

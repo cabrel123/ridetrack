@@ -1,6 +1,7 @@
 <template>
   <div class="page page-subscription">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -11,50 +12,87 @@
         <div class="title">Abonnement</div>
       </div>
     </div>
-
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom bg-color-white">
+      <div class="toolbar-inner">
+        <a href="/home/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">house</i>
+          <i class="icon material-icons md-only font-size-35">home</i>
+          <span class="tabbar-label font-size-17">Accueil</span>
+        </a>
+        <a href="/subscription/" class="tab-link tab-link-active">
+          <i class="icon f7-icons if-not-md font-size-35 text-color-white"
+            >creditcard</i
+          >
+          <i class="icon material-icons md-only font-size-35 text-color-white"
+            >payment</i
+          >
+          <span class="tabbar-label font-size-17">Abonnement</span>
+        </a>
+        <a href="/alert/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35"
+            >exclamationmark_triangle</i
+          >
+          <i class="icon material-icons md-only font-size-35">warning_amber</i>
+          <span class="tabbar-label font-size-17">Alerte</span>
+        </a>
+        <a href="/settings/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
+          <i class="icon material-icons md-only font-size-35">settings</i>
+          <span class="tabbar-label font-size-17">Paramètres</span>
+        </a>
+      </div>
+    </div>
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
           <h4>
-            L'abonnement vous permet d'avoir accès en tout aux informations des
-            chauffeurs chaque fois que vous scannez le QRCode.
+            L'abonnement vous permet d'avoir accès à tout moment aux
+            informations des chauffeurs chaque fois que vous scannez le QRCode.
+            Il vous permet egalement d'envoyer des notifications (SMS) à vos
+            contacts d'urgence et aux forces de l'ordre en cas de situation de
+            danger.
           </h4>
         </div>
-        <div class="grid">
-          <label class="card">
-            <input name="plan" class="radio" type="radio" checked />
+        <form>
+          <div class="grid">
+            <label class="card">
+              <input
+                name="referenceId"
+                class="radio"
+                type="radio"
+                value="1"
+                checked
+              />
 
-            <span class="plan-details">
-              <span class="plan-type">Starter</span>
-              <span class="plan-cost"
-                >500 FCFA<span class="slash">/</span
-                ><abbr class="plan-cycle" title="month">1 semaine</abbr></span
-              >
-            </span>
-          </label>
-          <label class="card">
-            <input name="plan" class="radio" type="radio" />
+              <span class="plan-details">
+                <span class="plan-cost"
+                  >500 FCFA<span class="slash">/</span
+                  ><abbr class="plan-cycle" title="month">1 semaine</abbr></span
+                >
+              </span>
+            </label>
+            <label class="card">
+              <input name="referenceId" class="radio" type="radio" value="2" />
 
-            <span class="plan-details" aria-hidden="true">
-              <span class="plan-type">Pro</span>
-              <span class="plan-cost"
-                >1500 FCFA<span class="slash">/</span
-                ><span class="plan-cycle">1 mois</span></span
-              >
-            </span>
-          </label>
-          <label class="card">
-            <input name="plan" class="radio" type="radio" />
+              <span class="plan-details" aria-hidden="true">
+                <span class="plan-cost"
+                  >1500 FCFA<span class="slash">/</span
+                  ><span class="plan-cycle">1 mois</span></span
+                >
+              </span>
+            </label>
+            <label class="card">
+              <input name="referenceId" class="radio" type="radio" value="3" />
 
-            <span class="plan-details" aria-hidden="true">
-              <span class="plan-type">Advanced</span>
-              <span class="plan-cost"
-                >5000 FCFA<span class="slash">/</span
-                ><span class="plan-cycle">3 mois</span></span
-              >
-            </span>
-          </label>
-        </div>
+              <span class="plan-details" aria-hidden="true">
+                <span class="plan-cost"
+                  >3500 FCFA<span class="slash">/</span
+                  ><span class="plan-cycle">3 mois</span></span
+                >
+              </span>
+            </label>
+          </div>
+        </form>
         <div class="toolbar tabbar">
           <div class="toolbar-inner">
             <a href="#tab-1" class="tab-link tab-link-active"
@@ -81,8 +119,8 @@
                           <input
                             type="tel"
                             placeholder="N° de téléphone Orange money"
-                            id="phone"
-                            name="phone"
+                            id="omphone"
+                            name="omphone"
                             class="input-with-value"
                           />
                           <span class="input-clear-button"></span>
@@ -95,8 +133,8 @@
                   <ul>
                     <li>
                       <a
-                        class="button button-fill color-black list-button"
-                        @click="${signIn}"
+                        class="button button-fill color-black list-button button-round"
+                        @click="${omPayment}"
                         >Valider</a
                       >
                     </li>
@@ -120,8 +158,8 @@
                           <input
                             type="tel"
                             placeholder="N° de téléphone MTN mobile Money"
-                            id="phone"
-                            name="phone"
+                            id="momophone"
+                            name="mtnphone"
                             class="input-with-value"
                           />
                           <span class="input-clear-button"></span>
@@ -134,8 +172,8 @@
                   <ul>
                     <li>
                       <a
-                        class="button button-fill color-black list-button"
-                        @click="${signIn}"
+                        class="button button-fill color-black list-button button-round"
+                        @click="${momoPayment}"
                         >Valider</a
                       >
                     </li>
@@ -146,6 +184,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="fab fab-extended fab-center-bottom">
+      <a @click="${scanCode}" class="btn-scan">
+        <img src="img/icon-qrcode.png" class="img-scan" />
+      </a>
     </div>
   </div>
 </template>
@@ -170,7 +213,14 @@
   .md .item-input:not(.item-input-outline).item-content:before {
     background: transparent;
   }
-  .page-verify-phone .list input[type="text"] {
+  .page-subscription .page-content {
+    padding-bottom: calc(
+      var(--f7-page-toolbar-bottom-offset, 0px) + var(--f7-safe-area-bottom) +
+        var(--f7-page-content-extra-padding-bottom, 100px)
+    );
+  }
+
+  .page-subscription .list input[type="text"] {
     text-align: center;
   }
   .page-subscription .grid {
@@ -303,9 +353,369 @@
   }
 </style>
 <script>
-  export default (props, { $, $f7, $f7router }) => {
-    const signIn = () => {
-      app.views.main.router.navigate("/home/");
+  export default (props, { $, $f7, $on, $f7router }) => {
+    let iscontact = localStorage.getItem("is_emergency_contact_exist");
+    let userId = localStorage.getItem("userId");
+    $on("pageInit", () => {
+      let access_token = localStorage.getItem("access_token");
+      let referenceId = localStorage.getItem("referenceId");
+      let transactionId = localStorage.getItem("transactionId");
+      let transactionType = localStorage.getItem("transactionType");
+      let additionnal = localStorage.getItem("additionnal");
+
+      if (access_token) {
+        getResponse(
+          access_token,
+          referenceId,
+          userId,
+          transactionId,
+          transactionType,
+          additionnal
+        );
+      }
+    });
+
+    const omPayment = () => {
+      $f7.dialog.preloader("Un instant svp...");
+      const subscriptionPlan = $('input[name="referenceId"]:checked').val();
+      let phone = $("#omphone").val();
+      const transactionType = 1;
+
+      if (phone == "") {
+        $f7.dialog.close();
+        toastTop = $f7.toast.create({
+          text: "Veuillez renseigner tous les champs SVP !",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+        return;
+      }
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          phone: phone,
+          userId: userId,
+          transactionType: transactionType,
+          referenceId: subscriptionPlan,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          //console.log("data", data);
+          $f7.dialog.close();
+          toastTop = $f7.toast.create({
+            text: "Transaction initiée avec succès ! Veuillez valider la transaction en saisissant votre code secret",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+
+          window.localStorage.setItem("access_token", data.access_token);
+          window.localStorage.setItem("referenceId", data.referenceId);
+          window.localStorage.setItem("transactionId", data.transactionId);
+          window.localStorage.setItem("transactionType", data.transactionType);
+          window.localStorage.setItem("additionnal", data.additionnal);
+          window.localStorage.setItem("subscriptionPlan", subscriptionPlan);
+
+          getResponse(
+            data.access_token,
+            data.referenceId,
+            data.accountId,
+            data.transactionId,
+            1,
+            data.additionnal,
+            subscriptionPlan
+          );
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const momoPayment = () => {
+      $f7.dialog.preloader("Un instant svp...");
+      const subscriptionPlan = $('input[name="referenceId"]:checked').val();
+      let phone = $("#momophone").val();
+      const transactionType = 2;
+
+      if (phone == "") {
+        $f7.dialog.close();
+        toastTop = $f7.toast.create({
+          text: "Veuillez renseigner tous les champs SVP !",
+          position: "top",
+          cssClass: "toast_warning",
+          closeTimeout: 3000,
+        });
+
+        // Open it
+        toastTop.open();
+        return;
+      }
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          phone: phone,
+          userId: userId,
+          transactionType: transactionType,
+          referenceId: subscriptionPlan,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          console.log("data", data);
+          $f7.dialog.close();
+          toastTop = $f7.toast.create({
+            text: "Transaction initiée avec succès ! Veuillez valider la transaction en saisissant votre code secret",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 4000,
+          });
+
+          // Open it
+          toastTop.open();
+
+          window.localStorage.setItem("access_token", data.access_token);
+          window.localStorage.setItem("referenceId", data.referenceId);
+          window.localStorage.setItem("transactionId", data.transactionId);
+          window.localStorage.setItem("transactionType", data.transactionType);
+          window.localStorage.setItem("additionnal", data.additionnal);
+          window.localStorage.setItem("subscriptionPlan", subscriptionPlan);
+
+          getResponse(
+            data.access_token,
+            data.referenceId,
+            data.accountId,
+            data.transactionId,
+            2,
+            data.additionnal,
+            subscriptionPlan
+          );
+          //app.views.main.router.navigate("/home/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const getResponse = (
+      access_token,
+      referenceId,
+      userId,
+      transactionId,
+      transactionType,
+      additionnal,
+      subscriptionPlan
+    ) => {
+      let url = "";
+      if (transactionType == 1) {
+        url = apiUrl + "/api/transactions/omresponse";
+      } else {
+        url = apiUrl + "/api/transactions/momoresponse";
+      }
+      // Envoyer la requête POST à l'API
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          transactionId: transactionId,
+          access_token: access_token,
+          referenceId: referenceId,
+          userId: userId,
+          additionnal: additionnal,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          console.log("response", data);
+          if (data.status == "SUCCESSFULL" || data.status == "SUCCESSFUL") {
+            toastTop = $f7.toast.create({
+              text: "Transaction validée avec succès !",
+              position: "top",
+              cssClass: "toast_green",
+              closeTimeout: 4000,
+            });
+            localStorage.setItem("susbscription_status", subscriptionPlan);
+            window.localStorage.removeItem("access_token");
+            window.localStorage.removeItem("referenceId");
+            window.localStorage.removeItem("transactionId");
+            window.localStorage.removeItem("transactionType");
+            window.localStorage.removeItem("additionnal");
+            window.localStorage.removeItem("subscriptionPlan");
+
+            app.views.main.router.navigate("/home/");
+          } else if (data.status == "PENDING") {
+            getResponse(
+              access_token,
+              referenceId,
+              userId,
+              transactionId,
+              transactionType,
+              additionnal,
+              subscriptionPlan
+            );
+          } else {
+            toastTop = $f7.toast.create({
+              text: "Une erreur s'est produite veuillez ressayer plus tard !",
+              position: "top",
+              cssClass: "toast_red",
+              closeTimeout: 3000,
+            });
+
+            // Open it
+            toastTop.open();
+          }
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const scanCode = () => {
+      if (iscontact == 1) {
+        cordova.plugins.barcodeScanner.scan(
+          function (result) {
+            console.log(
+              "We got a barcode\n" +
+                "Result: " +
+                result.text +
+                "\n" +
+                "Format: " +
+                result.format +
+                "\n" +
+                "Cancelled: " +
+                result.cancelled
+            );
+            if (result.cancelled === true) {
+              toastTop = $f7.toast.create({
+                text: "Vous avez annulé le scan !",
+                position: "top",
+                cssClass: "toast_warning",
+                closeTimeout: 3000,
+              });
+              toastTop.open();
+            } else {
+              let str = result.text.split("-");
+              const driver = str[1];
+              localStorage.setItem("driver", driver);
+              app.views.main.router.navigate("/driver-profile/");
+            }
+          },
+          function (error) {
+            toastTop = $f7.toast.create({
+              text: "Scanning failed: " + error,
+              position: "top",
+              cssClass: "toast_red",
+              closeTimeout: 3000,
+            });
+            toastTop.open();
+            //alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Place a barcode inside the scan area", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        toastTop = $f7.toast.create({
+          text: "Vous n'avez aucun contact d'urgence enregistré ! Prière d'enregistrer au moins 1 contact avant de scanner.",
+          position: "top",
+          cssClass: "toast_info",
+          closeTimeout: 3000,
+        });
+        toastTop.open();
+        app.views.main.router.navigate("/add-contact/");
+      }
     };
 
     return $render;

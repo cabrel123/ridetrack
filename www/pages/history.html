@@ -20,56 +20,7 @@
         <div class="card">
           <div class="card-content">
             <div class="list media-list no-safe-areas">
-              <ul>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">TR #120SSR</div>
-                    </div>
-                    <div class="item-subtitle">Type : 1 semaine</div>
-                    <div class="item-subtitle">
-                      Statut : <span class="text-color-green">validé</span>
-                    </div>
-                  </div>
-                  <div class="display-block item-after text-align-right">
-                    <span>500 FCFA</span>
-                    <br />
-                    <span>10 Avr 2024 10:25</span>
-                  </div>
-                </li>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">TR #120SSR</div>
-                    </div>
-                    <div class="item-subtitle">Type : 1 semaine</div>
-                    <div class="item-subtitle">
-                      Statut : <span class="text-color-green">validé</span>
-                    </div>
-                  </div>
-                  <div class="display-block item-after text-align-right">
-                    <span>500 FCFA</span>
-                    <br />
-                    <span>10 Avr 2024 10:25</span>
-                  </div>
-                </li>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">TR #120SSR</div>
-                    </div>
-                    <div class="item-subtitle">Type : 1 semaine</div>
-                    <div class="item-subtitle">
-                      Statut : <span class="text-color-green">validé</span>
-                    </div>
-                  </div>
-                  <div class="display-block item-after text-align-right">
-                    <span>500 FCFA</span>
-                    <br />
-                    <span>10 Avr 2024 10:25</span>
-                  </div>
-                </li>
-              </ul>
+              <ul class="transactionsList"></ul>
             </div>
           </div>
         </div>
@@ -83,9 +34,113 @@
   }
 </style>
 <script>
-  export default (props, { $, $f7, $f7router }) => {
-    const verifyPhone = () => {
-      app.views.main.router.navigate("/home/");
+  export default (props, { $f7, $f7router, $on }) => {
+    let toastTop;
+    var options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    var opt_weekday = { weekday: "short" };
+    const toTitleCase = (str) => {
+      return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+    };
+
+    $on("pageInit", () => {
+      myTransactions();
+    });
+
+    const myTransactions = () => {
+      // Specify the API endpoint for user data
+
+      let content = "";
+      let userId = localStorage.getItem("userId");
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/transactions/user/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          var content = "";
+
+          var maxRow = data.length;
+
+          var i = "";
+          if (maxRow == 0) {
+            content += '<div class="card card-outline margin-top">';
+            content +=
+              '<div class="card-content card-content-padding">Vous n\'avez aucune transaction dans votre historique pour le moment !</div>';
+            content += "</div>";
+          } else {
+            for (i = 0; i < maxRow; i++) {
+              var today = new Date(data[i]["created_at"]);
+              var weekday = toTitleCase(
+                today.toLocaleDateString("fr-FR", opt_weekday)
+              );
+              var createAt =
+                weekday + ", " + today.toLocaleDateString("fr-FR", options);
+
+              content +=
+                '<li class="item-content border-bottom no-border-radius">';
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content +=
+                '<div class="item-title">' +
+                data[i]["transactionID"] +
+                "</div>";
+              content += "</div>";
+              if (data[i]["referenceId"] == 1) {
+                content += '<div class="item-subtitle">Type : 1 semaine</div>';
+              } else if (data[i]["referenceId"] == 2) {
+                content += '<div class="item-subtitle">Type : 1 mois</div>';
+              } else if (data[i]["referenceId"] == 3) {
+                content += '<div class="item-subtitle">Type : 3 mois</div>';
+              } else {
+                content += '<div class="item-subtitle">Type : non défini</div>';
+              }
+              content += '<div class="item-subtitle">';
+              if (data[i]["pending"] == 0) {
+                content +=
+                  ' Statut : <span class="text-color-green">validé</span>';
+              } else if (data[i]["pending"] == 1) {
+                content +=
+                  ' Statut : <span class="text-color-yellow">en attente</span>';
+              } else if (data[i]["pending"] == 2) {
+                content +=
+                  ' Statut : <span class="text-color-red">annulé</span>';
+              } else {
+                content +=
+                  ' Statut : <span class="text-color-green">non défini</span>';
+              }
+
+              content += "</div>";
+              content += "</div>";
+              content +=
+                ' <div class="display-block item-after text-align-right">';
+              content += "<span>" + data[i]["amount"] + " FCFA</span>";
+              content += "<br />";
+              content += "<span>" + createAt + "</span>";
+              content += "<br />";
+              content += "<span>" + data[i]["payMethod"] + "</span>";
+              content += "</div>";
+              content += "</li>";
+            }
+          }
+          $(".transactionsList").html(content);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     };
 
     return $render;

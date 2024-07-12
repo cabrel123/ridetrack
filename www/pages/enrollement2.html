@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -14,12 +15,32 @@
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
         <h3 class="text-align-center">Entrez vos informations SVP</h3>
         <form id="register-form3" method="post">
           <div class="list">
             <ul>
+              <li class="item-content item-input item-input-with-value">
+                <div class="item-inner">
+                  <div class="item-title item-label">
+                    N° du permis de conduire
+                    <span class="text-color-red">*</span>
+                  </div>
+                  <div class="item-input-wrap">
+                    <input
+                      type="text"
+                      placeholder="Permis de conduire"
+                      id="driver_licence"
+                      name="driver_licence"
+                      class="input-with-value"
+                      required
+                      validate
+                    />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
                   <div class="item-title item-label">
@@ -85,7 +106,7 @@
                   <div class="item-title item-label">Nom du propriétaire</div>
                   <div class="item-input-wrap">
                     <input
-                      type="texte"
+                      type="text"
                       placeholder="Nom du propriétaire"
                       id="owner_name"
                       name="owner_name"
@@ -150,16 +171,14 @@
       $f7.dialog.close();
 
       $("#owner").change(function () {
-        console.log("icici" + this.value);
-        var status = this.value;
-        console.log("val=" + $("#owner").val());
+        var status = $("#owner").val();
 
-        if (status == "1") {
-          $("#owner_name").show();
-          $("#owner_phone").show();
+        if (status == "2") {
+          $("#owner1").show();
+          $("#owner2").show();
         } else {
-          $("#owner_name").hide();
-          $("#owner_phone").hide();
+          $("#owner1").hide();
+          $("#owner2").hide();
         }
       });
     });
@@ -173,7 +192,7 @@
       var immatriculation_numberInput = registerForm.querySelector(
         'input[name="immatriculation_number"]'
       );
-      var ownerInput = registerForm.querySelector('input[name="owner"]');
+      var ownerInput = registerForm.querySelector('select[name="owner"]');
       var ownerNameInput = registerForm.querySelector(
         'input[name="owner_name"]'
       );
@@ -181,11 +200,16 @@
         'input[name="owner_phone"]'
       );
 
+      var driverlicenceInput = registerForm.querySelector(
+        'input[name="driver_licence"]'
+      );
+
       var car = carInput.value.trim();
       var immatriculation_number = immatriculation_numberInput.value.trim();
       var owner = ownerInput.value.trim();
+      var driver_licence = driverlicenceInput.value.trim();
 
-      if (!car || !owner || !immatriculation_number) {
+      if (!car || !owner || !immatriculation_number || !driver_licence) {
         $f7.dialog.close();
         // Create toast
 
@@ -205,14 +229,21 @@
       var car = carInput.value;
       var immatriculation_number = immatriculation_numberInput.value;
       var owner = ownerInput.value;
-      var owner_name = ownerNameInput.value;
-      var owner_phone = ownerPhoneInput.value;
+      var driver_licence = driverlicenceInput.value;
+      if (owner == 1) {
+        var owner_name = localStorage.getItem("firstname");
+        var owner_phone = localStorage.getItem("phone");
+      } else {
+        var owner_name = ownerNameInput.value;
+        var owner_phone = ownerPhoneInput.value;
+      }
 
       localStorage.setItem("car", car);
       localStorage.setItem("immatriculation_number", immatriculation_number);
       localStorage.setItem("owner", owner);
       localStorage.setItem("owner_name", owner_name);
       localStorage.setItem("owner_phone", owner_phone);
+      localStorage.setItem("driver_licence", driver_licence);
 
       app.views.main.router.navigate("/enrollement3/");
     };

@@ -4,12 +4,38 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a class="link back">
+          <a class="link back" href="/settings/">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
         </div>
         <div class="title">Mes contacts d'urgences</div>
+      </div>
+    </div>
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom bg-color-white">
+      <div class="toolbar-inner">
+        <a href="/home/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">house</i>
+          <i class="icon material-icons md-only font-size-35">home</i>
+          <span class="tabbar-label font-size-17">Accueil</span>
+        </a>
+        <a href="/subscription/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">creditcard</i>
+          <i class="icon material-icons md-only font-size-35">payment</i>
+          <span class="tabbar-label font-size-17">Abonnement</span>
+        </a>
+        <a href="/alert/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35"
+            >exclamationmark_triangle</i
+          >
+          <i class="icon material-icons md-only font-size-35">warning_amber</i>
+          <span class="tabbar-label font-size-17">Alerte</span>
+        </a>
+        <a href="/settings/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
+          <i class="icon material-icons md-only font-size-35">settings</i>
+          <span class="tabbar-label font-size-17">Paramètres</span>
+        </a>
       </div>
     </div>
     <div class="page-content">
@@ -23,6 +49,11 @@
       </div>
       <div class="demo-expandable-cards contactList"></div>
     </div>
+    <div class="fab fab-extended fab-center-bottom">
+      <a @click="${scanCode}" class="btn-scan">
+        <img src="img/icon-qrcode.png" class="img-scan" />
+      </a>
+    </div>
     <div class="fab fab-right-bottom">
       <a href="/add-contact/" class="bg-color-lime">
         <i class="icon f7-icons if-not-md">plus</i>
@@ -34,6 +65,8 @@
 <script>
   export default (props, { $f7, $f7router, $on }) => {
     let toastTop;
+    let iscontact = localStorage.getItem("is_emergency_contact_exist");
+
     $on("pageInit", () => {
       myContact();
     });
@@ -105,6 +138,7 @@
           var maxRow = data.length;
 
           var i = "";
+          let lastname;
           if (maxRow == 0) {
             content += '<div class="card card-outline margin-top">';
             content +=
@@ -112,6 +146,11 @@
             content += "</div>";
           } else {
             for (i = 0; i < maxRow; i++) {
+              if (data[i]["lastname"] == null || data[i]["lastname"] == "") {
+                lastname = "";
+              } else {
+                lastname = data[i]["lastname"];
+              }
               content +=
                 ' <div class="card card-expandable" id="card' +
                 data[i]["id"] +
@@ -123,7 +162,7 @@
                 '<div class="card-header text-color-black">' +
                 data[i]["firstname"] +
                 " " +
-                data[i]["lastname"] +
+                lastname +
                 "</div>";
               content +=
                 '<a class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">';
@@ -148,7 +187,7 @@
                 '<div class="item-after">' +
                 data[i]["firstname"] +
                 " " +
-                data[i]["lastname"] +
+                lastname +
                 "</div>";
               content += "</li>";
               content += '<li class="item-content">';
@@ -222,6 +261,72 @@
         removeContact(contactId);
       }
     });
+
+    const scanCode = () => {
+      if (iscontact == 1) {
+        cordova.plugins.barcodeScanner.scan(
+          function (result) {
+            console.log(
+              "We got a barcode\n" +
+                "Result: " +
+                result.text +
+                "\n" +
+                "Format: " +
+                result.format +
+                "\n" +
+                "Cancelled: " +
+                result.cancelled
+            );
+            if (result.cancelled === true) {
+              toastTop = $f7.toast.create({
+                text: "Vous avez annulé le scan !",
+                position: "top",
+                cssClass: "toast_warning",
+                closeTimeout: 3000,
+              });
+              toastTop.open();
+            } else {
+              let str = result.text.split("-");
+              const driver = str[1];
+              localStorage.setItem("driver", driver);
+              app.views.main.router.navigate("/driver-profile/");
+            }
+          },
+          function (error) {
+            toastTop = $f7.toast.create({
+              text: "Scanning failed: " + error,
+              position: "top",
+              cssClass: "toast_red",
+              closeTimeout: 3000,
+            });
+            toastTop.open();
+            //alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Place a barcode inside the scan area", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        toastTop = $f7.toast.create({
+          text: "Vous n'avez aucun contact d'urgence enregistré ! Prière d'enregistrer au moins 1 contact avant de scanner.",
+          position: "top",
+          cssClass: "toast_info",
+          closeTimeout: 3000,
+        });
+        toastTop.open();
+        app.views.main.router.navigate("/add-contact/");
+      }
+    };
 
     return $render;
   };

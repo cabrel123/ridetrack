@@ -9,42 +9,50 @@
             <i class="icon material-icons md-only">menu</i>
           </a>
         </div>
-        <div class="title sliding">Hello, Cabrel</div>
+        <div class="title sliding">Hello, <span class="username1"></span></div>
         <div class="right padding">
           <a href="/profile/">
-            <img src="img/img5.png" width="50" />
+            <img src="img/img5.png" id="profilePhoto1" class="img-round-50" />
           </a>
         </div>
         <div class="title-large">
           <div class="title-large-text">
-            Hello, <span class="username"></span>
+            Hello, <span class="username1"></span>
           </div>
         </div>
       </div>
     </div>
-    <div class="toolbar tabbar tabbar-icons toolbar-bottom">
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom bg-color-white">
       <div class="toolbar-inner">
-        <a href="/home/" class="tab-link">
-          <i class="icon f7-icons if-not-md font-size-35">house</i>
-          <i class="icon material-icons md-only font-size-35">home</i>
-          <span class="tabbar-label font-size-17">Accueil</span>
+        <a href="/home/" class="tab-link tab-link-active">
+          <i class="icon f7-icons if-not-md font-size-35 text-color-white"
+            >house</i
+          >
+          <i class="icon material-icons md-only font-size-35 text-color-white"
+            >home</i
+          >
+          <span class="tabbar-label font-size-17" tkey="HOME">Accueil</span>
         </a>
-        <a href="#" class="tab-link">
-          <i class="icon f7-icons if-not-md font-size-35">placemark</i>
-          <i class="icon material-icons md-only font-size-35">location_on</i>
-          <span class="tabbar-label font-size-17">Tracking</span>
+        <a href="/subscription/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">creditcard</i>
+          <i class="icon material-icons md-only font-size-35">payment</i>
+          <span class="tabbar-label font-size-17" tkey="SUBSCRIPTION"
+            >Abonnement</span
+          >
         </a>
         <a href="/alert/" class="tab-link">
           <i class="icon f7-icons if-not-md font-size-35"
             >exclamationmark_triangle</i
           >
           <i class="icon material-icons md-only font-size-35">warning_amber</i>
-          <span class="tabbar-label font-size-17">Alerte</span>
+          <span class="tabbar-label font-size-17" tkey="ALERT">Alerte</span>
         </a>
         <a href="/settings/" class="tab-link">
           <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
           <i class="icon material-icons md-only font-size-35">settings</i>
-          <span class="tabbar-label font-size-17">Paramètres</span>
+          <span class="tabbar-label font-size-17" tkey="SETTINGS"
+            >Paramètres</span
+          >
         </a>
       </div>
     </div>
@@ -53,150 +61,667 @@
         class="list list-strong inset list-dividers-ios searchbar-hide-on-search"
       >
         <div class="grid grid-cols-2 grid-gap">
-          <div class="card">
-            <div class="card-header bold-500">Signalements</div>
-            <div class="card-content card-content-padding font-size-24">0</div>
+          <div class="card no-margin-left">
+            <a href="/alert-history/">
+              <div class="card-header bold-500 text-color-black" tkey="SIGNALS">
+                Signalements
+              </div>
+              <div
+                class="card-content card-content-padding font-size-16 totalreport"
+              >
+                0
+              </div>
+            </a>
           </div>
-          <div class="card">
-            <div class="card-header bold-500">Abonnement</div>
-            <div class="card-content card-content-padding font-size-24">
-              1 semaine
-            </div>
+          <div class="card no-margin-right">
+            <a href="/subscription/">
+              <div
+                class="card-header bold-500 text-color-black"
+                tkey="SUBSCRIPTION"
+              >
+                Abonnement
+              </div>
+              <div
+                class="card-content card-content-padding font-size-16 status2"
+              ></div>
+            </a>
           </div>
         </div>
-      </div>
-      <div class="block-title searchbar-found">Components</div>
-      <div
-        class="list list-strong inset list-dividers-ios components-list searchbar-found"
-      >
         <ul>
           <li>
-            <a class="item-content item-link" href="/accordion/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Accordion</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/action-sheet/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Action Sheet</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/area-chart/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Area Chart</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/autocomplete/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Autocomplete</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/badge/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Badge</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/breadcrumbs/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Breadcrumbs</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/buttons/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Buttons</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/calendar/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Calendar / Date Picker</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="item-content item-link" href="/cards/">
-              <div class="item-media"><i class="icon icon-f7"></i></div>
-              <div class="item-inner">
-                <div class="item-title">Cards</div>
+            <a href="/my-contact/">
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">person_3</i>
+                  <i class="icon material-icons md-only">groups_2</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title" tkey="URGENT_CONTACT">
+                    Contacts d'urgence
+                  </div>
+                  <div class="item-after">
+                    <span class="badge color-orange totalusers">0</span>
+                  </div>
+                </div>
               </div>
             </a>
           </li>
         </ul>
-      </div>
-      <div class="list list-strong inset simple-list searchbar-not-found">
-        <ul>
-          <li>Nothing found</li>
-        </ul>
-      </div>
-      <div class="block-title searchbar-hide-on-search">Themes</div>
-      <div
-        class="list list-strong inset list-dividers-ios searchbar-hide-on-search"
-      >
-        <ul>
-          <li>
-            <a href="./?theme=ios" class="external item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">iOS Theme</div>
+        <div class="block-title searchbar-found" tkey="ALERT_BUTTON">
+          Vos boutons d'alerte
+        </div>
+
+        <div
+          class="grid grid-cols-2 grid-gap passenger-bloc margin-top-40"
+          style="display: none"
+        >
+          <div class="card">
+            <button @click="${dangerAlert}">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front text">
+                <img src="img/alert.png" />
+              </span>
+            </button>
+          </div>
+          <div class="card">
+            <button @click="${dangerAlert2}">
+              <span class="shadow"></span>
+              <span class="edge2"></span>
+              <span class="front2 text">
+                <img src="img/alert.png" />
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-2 grid-gap passenger-bloc"
+          style="display: none"
+        >
+          <div class="card">
+            <button @click="${dangerAlert3}">
+              <span class="shadow"></span>
+              <span class="edge3"></span>
+              <span class="front3 text">
+                <img src="img/alert.png" />
+              </span>
+            </button>
+          </div>
+          <div class="card">
+            <button @click="${dangerAlert4}">
+              <span class="shadow"></span>
+              <span class="edge4"></span>
+              <span class="front4 text">
+                <img src="img/alert.png" />
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="grid grid-gap driver-bloc margin-top-40"
+          style="display: none"
+        >
+          <div class="btn-alert">
+            <button @click="${dangerAlert}">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front text">
+                <img src="img/alert.png" />
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="block-title" tkey="COLOR_CODE">Code couleur</div>
+        <div class="list list-strong-ios list-outline-ios list-dividers-ios">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title" tkey="AGRESSION_DANGER">
+                    Danger agression
+                  </div>
+                  <div class="item-after">
+                    <span class="badge color-red text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
               </div>
-            </a>
-          </li>
-          <li>
-            <a href="./?theme=md" class="external item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Material (MD) Theme</div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title" tkey="DANGEROUS_ROAD">
+                    Détour dangereux
+                  </div>
+                  <div class="item-after">
+                    <span class="badge color-orange text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
               </div>
-            </a>
-          </li>
-          <li>
-            <a href="/color-themes/" class="item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Color Themes</div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title" tkey="SUSPICIOUS_DRIVER">
+                    Chauffeur suspect
+                  </div>
+                  <div class="item-after">
+                    <span class="badge color-blue text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
               </div>
-            </a>
-          </li>
-        </ul>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title" tkey="TECHNICAL_ISSUE">
+                    Panne technique
+                  </div>
+                  <div class="item-after">
+                    <span class="badge color-black text-color-transparent"
+                      >0</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="fab fab-extended fab-center-bottom">
-      <a href="#" class="btn-scan">
+      <a @click="${scanCode}" class="btn-scan" id="button-scan">
         <img src="img/icon-qrcode.png" class="img-scan" />
       </a>
     </div>
   </div>
 </template>
+
 <script>
   export default (props, { $, $f7, $on, $f7router }) => {
+    let userId = localStorage.getItem("userId");
+    let driver = localStorage.getItem("driver");
+    let userlat = localStorage.getItem("userlat");
+    let userlng = localStorage.getItem("userlng");
+    let userType = localStorage.getItem("type");
+    let iscontact = localStorage.getItem("is_emergency_contact_exist");
+    let refuse_subscription = localStorage.getItem("refuse_subscription");
+
     $on("pageInit", () => {
+      $f7.dialog.close();
       let firstname = localStorage.getItem("firstname");
       let lastname = localStorage.getItem("lastname");
+      let profilePhoto = localStorage.getItem("profilePhoto");
+      let status = localStorage.getItem("susbscription_status");
 
-      if (lastname) {
-        $(".username").html(lastname);
+      if (status == 1) {
+        $(".status2").html(
+          "<span class='text-color-green'>" + ONE_WEEK + "</span>"
+        );
+      } else if (status == 2) {
+        $(".status2").html(
+          "<span class='text-color-blue'>" + ONE_MONTH + "</span>"
+        );
+      } else if (status == 3) {
+        $(".status2").html(
+          "<span class='text-color-yellow'>" + THREE_MONTHS + "</span>"
+        );
       } else {
-        $(".username").html(firstname);
+        $(".status2").html("<span class='text-color-red'>expiré</span>");
+      }
+
+      if (
+        lastname == null ||
+        lastname == undefined ||
+        lastname == "undefined" ||
+        lastname == "" ||
+        lastname == "null"
+      ) {
+        $(".username1").html(firstname);
+        $(".username3").html(firstname);
+      } else {
+        $(".username1").html(lastname);
+        $(".username3").html(lastname);
+      }
+
+      if (userType == "dri") {
+        $(".driver-bloc").show();
+        $(".passenger-bloc").hide();
+      } else {
+        $(".driver-bloc").hide();
+        $(".passenger-bloc").show();
+      }
+
+      countTotalReport();
+      countTotalContact();
+      checkSubscriptionStatus();
+      if (
+        profilePhoto == null ||
+        profilePhoto == undefined ||
+        profilePhoto == "undefined" ||
+        profilePhoto == "" ||
+        profilePhoto == "null"
+      ) {
+        $("#profilePhoto1").attr("src", "img/img5.png");
+      } else {
+        $("#profilePhoto1").attr("src", apiUrl + "/api/images/" + profilePhoto);
       }
     });
+
+    const checkSubscriptionStatus = () => {
+      // Make a GET request using the Fetch API
+
+      fetch(apiUrl + "/api/subscription/check/" + userId)
+        .then((response) => {
+          if (response.status == 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+          } else {
+            if (!response.ok) {
+              $f7.dialog.close();
+
+              throw new Error("Erreur HTTP, statut " + response.status);
+            }
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+          localStorage.setItem(
+            "susbscription_status",
+            data[0]["susbscription_status"]
+          );
+          console.log("Abonnement actif", data);
+
+          if (data[0]["susbscription_status"] == 1) {
+            $(".status2").html(
+              "<span class='text-color-green'>" + ONE_WEEK + "</span>"
+            );
+          } else if (data[0]["susbscription_status"] == 2) {
+            $(".status2").html(
+              "<span class='text-color-blue'>" + ONE_MONTH + "</span>"
+            );
+          } else if (data[0]["susbscription_status"] == 3) {
+            $(".status2").html(
+              "<span class='text-color-yellow'>" + THREE_MONTHS + "</span>"
+            );
+          } else {
+            $(".status2").html("<span class='text-color-red'>expiré</span>");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          toastTop = $f7.toast.create({
+            text: SUBSCRIPTION_EXPIRED_TITLE,
+            position: "top",
+            cssClass: "toast_info",
+            closeTimeout: 5000,
+          });
+
+          // Open it
+          toastTop.open();
+          localStorage.setItem("susbscription_status", "0");
+          $(".status2").html("<span class='text-color-red'>expiré</span>");
+          if (refuse_subscription != 1) {
+            $f7.dialog
+              .create({
+                title: SUBSCRIPTION_EXPIRED,
+                text: DO_YOU_RENEW_IT,
+                buttons: [
+                  {
+                    text: NO,
+                  },
+                  {
+                    text: YES,
+                  },
+                ],
+                onClick: function (dialog, index) {
+                  if (index === 0) {
+                    //Button 1 clicked
+                    app.views.main.router.navigate("/home/");
+                    localStorage.setItem("refuse_subscription", 1);
+                  } else if (index === 1) {
+                    //Button 2 clicked
+                    app.views.main.router.navigate("/subscription/");
+                  }
+                },
+                verticalButtons: false,
+              })
+              .open();
+          }
+        });
+    };
+
+    const countTotalReport = () => {
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/alert/me/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+          //console.log("town Data:", town);
+
+          var maxRow = data.length;
+          $(".totalreport").html(maxRow);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    const countTotalContact = () => {
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/contacts/mycontact/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+          //console.log("Data:", data);
+
+          var maxRow = data.length;
+          if (maxRow > 0) {
+            localStorage.setItem("is_emergency_contact_exist", 1);
+          }
+          $(".totalusers").html(maxRow);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    const scanCode = () => {
+      if (iscontact == 1) {
+        cordova.plugins.barcodeScanner.scan(
+          function (result) {
+            console.log(
+              "We got a barcode\n" +
+                "Result: " +
+                result.text +
+                "\n" +
+                "Format: " +
+                result.format +
+                "\n" +
+                "Cancelled: " +
+                result.cancelled
+            );
+            if (result.cancelled === true) {
+              toastTop = $f7.toast.create({
+                text: YOU_HAVE_CANCEL_SCAN,
+                position: "top",
+                cssClass: "toast_warning",
+                closeTimeout: 3000,
+              });
+              toastTop.open();
+            } else {
+              let str = result.text.split("-");
+              const driver = str[1];
+              localStorage.setItem("driver", driver);
+              app.views.main.router.navigate("/driver-profile/");
+            }
+          },
+          function (error) {
+            toastTop = $f7.toast.create({
+              text: "Scanning failed: " + error,
+              position: "top",
+              cssClass: "toast_red",
+              closeTimeout: 3000,
+            });
+            toastTop.open();
+            //alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Place a barcode inside the scan area", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        toastTop = $f7.toast.create({
+          text: EMPTY_URGENCY_CONTACT,
+          position: "top",
+          cssClass: "toast_info",
+          closeTimeout: 3000,
+        });
+        toastTop.open();
+        app.views.main.router.navigate("/add-contact/");
+      }
+    };
+
+    const dangerAlert = () => {
+      let driverAlert = "";
+      if (userType == "dri") {
+        driverAlert = 1;
+      }
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          status: "1",
+          driver: driver,
+          userId: userId,
+          lat: userlat,
+          lng: userlng,
+          driverAlert: driverAlert,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: ALERT_SEND_SUCCESSFULLY,
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+          toastTop.open();
+          countTotalReport();
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const dangerAlert2 = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          status: "2",
+          driver: driver,
+          userId: userId,
+          lat: userlat,
+          lng: userlng,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: ALERT_SEND_SUCCESSFULLY,
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+          toastTop.open();
+          countTotalReport();
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const dangerAlert3 = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          status: "3",
+          driver: driver,
+          userId: userId,
+          lat: userlat,
+          lng: userlng,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: ALERT_SEND_SUCCESSFULLY,
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+          toastTop.open();
+          countTotalReport();
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const dangerAlert4 = () => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/alert/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          status: "4",
+          driver: driver,
+          userId: userId,
+          lat: userlat,
+          lng: userlng,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: ALERT_SEND_SUCCESSFULLY,
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+          toastTop.open();
+          countTotalReport();
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
     return $render;
   };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -14,7 +15,7 @@
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
         <h3 class="text-align-center">Entrez vos informations SVP</h3>
         <form id="register-form" method="post">
@@ -149,6 +150,9 @@
   .md .item-input:not(.item-input-outline).item-content:before {
     background: transparent;
   }
+  .page-content .block {
+    overflow: auto;
+  }
 </style>
 <script>
   export default (props, { $f7, $theme, $on, $f7router }) => {
@@ -206,6 +210,7 @@
         'input[name="driver_capacity"]'
       );
       var phoneInput = registerForm.querySelector('input[name="phone"]');
+      var townidInput = registerForm.querySelector('select[name="town_id"]');
 
       var firstname = firstnameInput.value.trim();
       var driver_capacity = driver_capacityInput.value.trim();
@@ -234,6 +239,7 @@
       var email = firstnameInput.value + "@test.com";
       var password = phone;
       var driver_capacity = driver_capacityInput.value;
+      var town_id = townidInput.value;
 
       localStorage.setItem("firstname", firstname);
       localStorage.setItem("lastname", lastname);
@@ -241,8 +247,48 @@
       localStorage.setItem("phone", phone);
       localStorage.setItem("email", email);
       localStorage.setItem("password", password);
+      localStorage.setItem("town_id", town_id);
+      sendSMSCode(phone);
+    };
 
-      app.views.main.router.navigate("/enrollement2/");
+    const sendSMSCode = (phone) => {
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/smscode/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ phone: phone }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          localStorage.setItem("step", 1);
+          app.views.main.router.navigate("/verify-phone3/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
     };
 
     $on("pageBeforeOut", () => {

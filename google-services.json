@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1006186960519",
+    "project_id": "taxi-sur-48a1c",
+    "storage_bucket": "taxi-sur-48a1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006186960519:android:bd4760d6b7889d80974a22",
+        "android_client_info": {
+          "package_name": "net.taxisur.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHj6xzRXIP-p3w6cvqjxlNlnQtfJaeAu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

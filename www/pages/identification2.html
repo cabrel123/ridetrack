@@ -1,0 +1,295 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Verso de votre CNI</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <form id="register-form" method="post">
+          <div class="block text-align-center">
+            <span class="img-profile">
+              <img
+                src="img/back-of-id-card.png"
+                id="imagePreview3"
+                width="100"
+              />
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 grid-gap">
+            <div class="bloc-img text-align-center">
+              <a id="capturePhoto" @click="${capturePhoto}" class="color-black">
+                <span class="display-block">
+                  <img src="img/camera2.png" width="100" />
+                </span>
+
+                <span class="display-block">Prendre une photo</span>
+              </a>
+            </div>
+            <div class="bloc-img text-align-center">
+              <a
+                id="chooseFromGallery"
+                @click="${chooseFromGallery}"
+                class="color-black"
+              >
+                <span class="display-block">
+                  <img src="img/gallery.jpg" width="55" />
+                </span>
+
+                <span class="display-block">Choisir depuis la galerie</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="list inset">
+            <ul>
+              <li>
+                <a
+                  @click="${uploadPhoto}"
+                  id="uploadPhoto"
+                  class="button button-fill color-black list-button button-round"
+                >
+                  Valider
+                </a>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .md .item-input:not(.item-input-outline).item-content:before {
+    background: transparent;
+  }
+</style>
+<script>
+  export default (props, { $f7, $theme, $on, $f7router }) => {
+    let toastTop;
+    $on("pageInit", () => {
+      $f7.dialog.close();
+      localStorage.setItem("step", 0);
+    });
+
+    // Événement de capture de photo
+    const capturePhoto = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+      });
+
+      function onSuccess(imageURI) {
+        var image = document.getElementById("imagePreview3");
+        image.src = "data:image/jpeg;base64," + imageURI;
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la capture de photo : " + message);
+      }
+    };
+
+    // Événement de sélection de photo depuis la galerie
+    const chooseFromGallery = () => {
+      navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      });
+
+      function onSuccess(imageURI) {
+        var image = document.getElementById("imagePreview3");
+        image.src = "data:image/jpeg;base64," + imageURI;
+      }
+
+      function onFail(message) {
+        app.dialog.alert("Échec de la sélection de photo : " + message);
+      }
+    };
+
+    // Événement de téléchargement de photo
+    const uploadPhoto = () => {
+      var imageURI = $("#imagePreview3").attr("src");
+
+      if (!imageURI) {
+        app.dialog.alert("Veuillez d'abord choisir une photo");
+        return;
+      }
+
+      // Afficher l'indicateur de chargement
+      var loader = app.dialog.progress("Téléchargement en cours...", 0);
+
+      // Convertir l'URI de l'image en données binaires
+      fetch(imageURI)
+        .then((response) => response.blob())
+        .then((blob) => {
+          var formData = new FormData();
+          formData.append("image", blob, "image.jpg");
+
+          fetch(apiUrl + "/api/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              // Cacher l'indicateur de chargement une fois la réponse reçue
+              loader.close();
+
+              if (!response.ok) {
+                throw new Error("Erreur HTTP, statut " + response.status);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              toastTop = $f7.toast.create({
+                text: "Photo téléversée avec succès !",
+                position: "top",
+                cssClass: "toast_green",
+                closeTimeout: 3000,
+              });
+
+              // Open it
+              toastTop.open();
+              let path = data.path;
+              let str = path.split("public/");
+              localStorage.setItem("cniVerso", str[1]);
+              let update_cni = localStorage.getItem("update_cni");
+              if (update_cni == 1) {
+                app.views.main.router.navigate("/successfull-account3/");
+              } else {
+                createDriverAccount(str[1]);
+              }
+            })
+            .catch((error) => {
+              // Cacher l'indicateur de chargement en cas d'erreur
+              loader.close();
+
+              app.dialog.alert(
+                "Erreur lors du téléversement de la photo : " + error.message
+              );
+            });
+        })
+        .catch((error) => {
+          // Cacher l'indicateur de chargement en cas d'erreur
+          loader.close();
+
+          app.dialog.alert(
+            "Erreur lors de la récupération des données de l'image : " +
+              error.message
+          );
+        });
+
+      // Gérer l'événement de progression
+      const progressHandler = (event) => {
+        // Calculer le pourcentage de progression
+        var percentComplete = Math.round((event.loaded / event.total) * 100);
+
+        // Mettre à jour l'indicateur de chargement avec le pourcentage
+        loader.update(progressHandler, percentComplete);
+      };
+    };
+
+    const createDriverAccount = (cni_verso) => {
+      const firstname = localStorage.getItem("firstname");
+      const lastname = localStorage.getItem("lastname");
+      const driver_capacity = localStorage.getItem("driver_capacity");
+      const phone = localStorage.getItem("phone");
+      const email = localStorage.getItem("email");
+      const password = localStorage.getItem("password");
+      const car = localStorage.getItem("car");
+      const immatriculation_number = localStorage.getItem(
+        "immatriculation_number"
+      );
+      const owner_name = localStorage.getItem("owner_name");
+      const owner_phone = localStorage.getItem("owner_phone");
+      const cni_recto = localStorage.getItem("cniRecto");
+      const profilePhoto = localStorage.getItem("profilePhoto");
+      const town_id = localStorage.getItem("town_id");
+      const driver_licence = localStorage.getItem("driver_licence");
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/driverregister", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          firstname: firstname,
+          lastname: lastname,
+          driver_capacity: driver_capacity,
+          email: email,
+          password: password,
+          car: car,
+          immatriculation_number: immatriculation_number,
+          owner_name: owner_name,
+          owner_phone: owner_phone,
+          cni_recto: cni_recto,
+          cni_verso: cni_verso,
+          profilePhoto: profilePhoto,
+          phone: phone,
+          password_confirmation: password,
+          town_id: town_id,
+          driver_licence: driver_licence,
+        }),
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Erreur HTTP, statut " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          toastTop = $f7.toast.create({
+            text: "Votre enrollement a été bien enregistré vous serez contacter dans les 48H maximum pour valider votre compte !",
+            position: "top",
+            cssClass: "toast_green",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+          localStorage.clear();
+
+          app.views.main.router.navigate("/successfull-account2/");
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          // Create toast
+
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    $on("pageBeforeOut", () => {
+      $f7.toast.close();
+    });
+
+    $on("pageBeforeRemove", () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+    });
+
+    return $render;
+  };
+</script>

@@ -1,0 +1,168 @@
+<template>
+  <div class="page page-history">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title" tkey="ALERT_HISTORY">
+          Historique des signalements
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios">
+        <div class="block text-align-center">
+          <h3 tkey="YOUR_ALL_ALERTS">Tous vos signalements</h3>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <ul class="alertList"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+</style>
+<script>
+  export default (props, { $f7, $f7router, $on }) => {
+    let toastTop;
+    var options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    var opt_weekday = { weekday: "short" };
+    const toTitleCase = (str) => {
+      return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+    };
+    $on("pageInit", () => {
+      myAlert();
+    });
+
+    const myAlert = () => {
+      // Specify the API endpoint for user data
+      $f7.dialog.preloader(ONE_MOMENT);
+      let content = "";
+      let userId = localStorage.getItem("userId");
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/alert/me/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          var content = "";
+
+          var maxRow = data.length;
+
+          var i = "";
+          if (maxRow == 0) {
+            content += '<div class="card card-outline margin-top">';
+            content +=
+              '<div class="card-content card-content-padding">' +
+              EMPTY_ALERT +
+              "</div>";
+            content += "</div>";
+          } else {
+            for (i = 0; i < maxRow; i++) {
+              var today = new Date(data[i]["created_at"]);
+              var weekday = toTitleCase(
+                today.toLocaleDateString("fr-FR", opt_weekday)
+              );
+              if (
+                data[i]["contactlastName"] == null ||
+                data[i]["contactlastName"] == "null"
+              ) {
+                var contactlastName = "";
+              } else {
+                var contactlastName = data[i]["contactlastName"];
+              }
+
+              var createAt =
+                weekday + ", " + today.toLocaleDateString("fr-FR", options);
+              content +=
+                '<li class="item-content border-bottom no-border-radius">';
+              content += '<div class="item-inner">';
+              content += '<div class="item-title-row">';
+              content +=
+                '<div class="item-title"> Alerte #' + data[i]["id"] + "</div>";
+              content += "</div>";
+
+              content += '<div class="item-subtitle">';
+              if (data[i]["status"] == 1) {
+                content +=
+                  ' Statut : <span class="text-color-red">' +
+                  AGRESSION_DANGER +
+                  "</span>";
+              } else if (data[i]["status"] == 2) {
+                content +=
+                  ' Statut : <span class="text-color-yellow">' +
+                  DANGEROUS_ROAD +
+                  "</span>";
+              } else if (data[i]["status"] == 3) {
+                content +=
+                  ' Statut : <span class="text-color-blue">' +
+                  SUSPECT_DRIVER +
+                  "</span>";
+              } else if (data[i]["status"] == 4) {
+                content +=
+                  ' Statut : <span class="text-color-gray">' +
+                  TECHNICAL_ISSUE +
+                  "</span>";
+              } else {
+                content +=
+                  ' Statut : <span class="text-color-black">' +
+                  UNDEFINED +
+                  "</span>";
+              }
+
+              content += "</div>";
+              content += "</div>";
+              content +=
+                ' <div class="display-block item-after text-align-right">';
+              content +=
+                "<span>" +
+                data[i]["contactfirstName"] +
+                " " +
+                contactlastName +
+                "</span>";
+              content += "<br />";
+              content += "<span>" + createAt + "</span>";
+              content += "</div>";
+              content += "</li>";
+            }
+          }
+          $(".alertList").html(content);
+          $f7.dialog.close();
+        })
+        .catch((error) => {
+          $f7.dialog.close();
+          console.error("Error:", error);
+        });
+    };
+
+    return $render;
+  };
+</script>

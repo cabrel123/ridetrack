@@ -3,12 +3,14 @@
     <div class="navbar">
       <div class="navbar-inner sliding">
         <div class="left">
-          <a class="link back">
+          <a class="link back" href="/my-contact/">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
         </div>
-        <div class="title">Ajouter un contact d'urgence</div>
+        <div class="title" tkey="ADD_URGENCY_CONTACT">
+          Ajouter un contact d'urgence
+        </div>
       </div>
     </div>
     <div class="page-content">
@@ -19,7 +21,8 @@
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
                   <div class="item-title item-label">
-                    Nom(s) <span class="text-color-red">*</span>
+                    <span tkey="LASTNAME">Nom(s)</span>
+                    <span class="text-color-red">*</span>
                   </div>
                   <div class="item-input-wrap">
                     <input
@@ -35,7 +38,9 @@
               </li>
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
-                  <div class="item-title item-label">Prenom(s)</div>
+                  <div class="item-title item-label">
+                    <span tkey="FIRSTNAME">Prenom(s)</span>
+                  </div>
                   <div class="item-input-wrap">
                     <input
                       type="text"
@@ -51,7 +56,8 @@
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
                   <div class="item-title item-label">
-                    N° de téléphone <span class="text-color-red">*</span>
+                    <span tkey="PHONE_NUMBER">N° de téléphone</span>
+                    <span class="text-color-red">*</span>
                   </div>
                   <div class="item-input-wrap">
                     <input
@@ -83,7 +89,7 @@
 
               <li class="item-content item-input item-input-with-value">
                 <div class="item-inner">
-                  <div class="item-title item-label">Ville</div>
+                  <div class="item-title item-label" tkey="TOWN">Ville</div>
                   <div class="item-input-wrap input-dropdown-wrap">
                     <select
                       name="town_id"
@@ -102,6 +108,7 @@
                 <a
                   class="button button-fill color-black list-button"
                   @click="${addContact}"
+                  tkey="ADD"
                   >Ajouter</a
                 >
               </li>
@@ -163,7 +170,7 @@
     };
 
     const addContact = (e) => {
-      $f7.dialog.preloader("Un instant svp...");
+      $f7.dialog.preloader(ONE_MOMENT);
       // Récupérer l'élément formulaire
       var registerForm = document.getElementById("add-contact-form");
       e.preventDefault(); // Empêcher le formulaire de soumettre normalement
@@ -182,7 +189,7 @@
         // Create toast
 
         toastTop = $f7.toast.create({
-          text: "Veuillez remplir les champs avec l'étoile rouge",
+          text: FILL_THE_FORM,
           position: "top",
           cssClass: "toast_warning",
           closeTimeout: 3000,
@@ -247,7 +254,7 @@
           // Traiter la réponse de l'API (par exemple, afficher un message de succès)
 
           toastTop = $f7.toast.create({
-            text: "Félicitations !!  Votre contact d'urgence a été enregistré avec succès !",
+            text: SUCCESSFULL_ADD_CONTACT,
             position: "top",
             cssClass: "toast_green",
             closeTimeout: 3000,
@@ -255,6 +262,8 @@
 
           // Open it
           toastTop.open();
+
+          localStorage.setItem("is_emergency_contact_exist", "1");
 
           app.views.main.router.navigate("/my-contact/");
         })

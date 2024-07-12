@@ -1,6 +1,7 @@
 <template>
   <div class="page page-settings">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -11,28 +12,32 @@
         <div class="title">Paramètres du compte</div>
       </div>
     </div>
-    <div class="toolbar tabbar tabbar-icons toolbar-bottom">
+    <div class="toolbar tabbar tabbar-icons toolbar-bottom bg-color-white">
       <div class="toolbar-inner">
         <a href="/home/" class="tab-link">
           <i class="icon f7-icons if-not-md font-size-35">house</i>
           <i class="icon material-icons md-only font-size-35">home</i>
           <span class="tabbar-label font-size-17">Accueil</span>
         </a>
-        <a href="#" class="tab-link">
-          <i class="icon f7-icons if-not-md font-size-35">placemark</i>
-          <i class="icon material-icons md-only font-size-35">location_on</i>
-          <span class="tabbar-label font-size-17">Tracking</span>
+        <a href="/subscription/" class="tab-link">
+          <i class="icon f7-icons if-not-md font-size-35">creditcard</i>
+          <i class="icon material-icons md-only font-size-35">payment</i>
+          <span class="tabbar-label font-size-17">Abonnement</span>
         </a>
-        <a href="#" class="tab-link">
+        <a href="/alert/" class="tab-link">
           <i class="icon f7-icons if-not-md font-size-35"
             >exclamationmark_triangle</i
           >
           <i class="icon material-icons md-only font-size-35">warning_amber</i>
           <span class="tabbar-label font-size-17">Alerte</span>
         </a>
-        <a href="/settings/" class="tab-link">
-          <i class="icon f7-icons if-not-md font-size-35">gear_alt</i>
-          <i class="icon material-icons md-only font-size-35">settings</i>
+        <a href="/settings/" class="tab-link tab-link-active">
+          <i class="icon f7-icons if-not-md font-size-35 text-color-white"
+            >gear_alt</i
+          >
+          <i class="icon material-icons md-only font-size-35 text-color-white"
+            >settings</i
+          >
           <span class="tabbar-label font-size-17">Paramètres</span>
         </a>
       </div>
@@ -41,10 +46,10 @@
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
           <span class="img-profile">
-            <img src="img/img5.png" width="100" />
+            <img src="img/img5.png" class="img-round-100" id="profilePhoto" />
           </span>
           <span class="img-icon">
-            <a class="popup-open" data-popup=".demo-popup-swipe-handler">
+            <a class="popup-open" data-popup=".demo-sheet-push">
               <i class="icon f7-icons if-not-md">camera_fill</i>
               <i class="icon material-icons md-only color-yellow"
                 >photo_camera</i
@@ -87,6 +92,21 @@
                 </div>
               </a>
             </li>
+            <li class="margin-bottom-20 driver-bloc" style="display: none">
+              <a class="item-content item-link" href="/my-subdriver/">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md color-yellow"
+                    >person_crop_rectangle</i
+                  >
+                  <i class="icon material-icons md-only color-yellow"
+                    >contact_mail</i
+                  >
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">Mon mercenaire</div>
+                </div>
+              </a>
+            </li>
             <li class="margin-bottom-20">
               <a class="item-content item-link" href="/subscription/">
                 <div class="item-media">
@@ -97,6 +117,21 @@
                 </div>
                 <div class="item-inner">
                   <div class="item-title">Abonnement</div>
+                </div>
+              </a>
+            </li>
+            <li class="margin-bottom-20">
+              <a class="item-content item-link external" href="tel:117">
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md color-yellow"
+                    >phone_fill_arrow_up_right</i
+                  >
+                  <i class="icon material-icons md-only color-yellow"
+                    >phone_forwarded</i
+                  >
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">Appel 117 : Ambulance et Police</div>
                 </div>
               </a>
             </li>
@@ -113,15 +148,23 @@
         </div>
       </div>
     </div>
-    <div class="popup demo-popup-swipe-handler">
+    <div class="popup demo-sheet-push">
       <div class="page">
         <div class="swipe-handler"></div>
         <div class="page-content">
-          <div class="block-title block-title-large">
+          <div
+            class="block-title block-title-large text-align-center text-color-yellow"
+          >
             Mettez à jour votre photo de profil
           </div>
           <div class="block block-strong-ios block-outline-ios">
-            <div class="grid grid-cols-2 grid-gap">
+            <img
+              src="img/img5.png"
+              id="imagePreview5"
+              width="100"
+              style="display: block; margin: auto"
+            />
+            <div class="grid grid-cols-2 grid-gap margin-top">
               <div class="bloc-img text-align-center">
                 <a
                   id="capturePhoto"
@@ -142,7 +185,7 @@
                   class="color-black"
                 >
                   <span class="display-block">
-                    <img src="img/gallery.jpg" width="100" />
+                    <img src="img/gallery.jpg" width="55" />
                   </span>
 
                   <span class="display-block">Choisir depuis la galerie</span>
@@ -155,8 +198,9 @@
               <ul>
                 <li>
                   <a
+                    @click="${uploadPhoto}"
                     id="uploadPhoto"
-                    class="button button-fill color-black list-button"
+                    class="button button-fill color-black list-button button-round"
                   >
                     Valider
                   </a>
@@ -169,7 +213,7 @@
     </div>
 
     <div class="fab fab-extended fab-center-bottom">
-      <a href="#" class="btn-scan">
+      <a @click="${scanCode}" class="btn-scan">
         <img src="img/icon-qrcode.png" class="img-scan" />
       </a>
     </div>
@@ -191,29 +235,139 @@
     { $, $f7, $on, $f7router, $onMounted, $onBeforeUnmount }
   ) => {
     let popupSwipeHandler;
+    let lat = localStorage.getItem("userlat");
+    let lng = localStorage.getItem("userlng");
+    let userType = localStorage.getItem("type");
+    let userId = localStorage.getItem("userId");
+    let iscontact = localStorage.getItem("is_emergency_contact_exist");
     $on("pageInit", () => {
       let firstname = localStorage.getItem("firstname");
       let lastname = localStorage.getItem("lastname");
-      let status = localStorage.getItem("status");
-      if (status == 1) {
-        $(".status").html("<span class='text-color-green'>actif</span>");
-      } else if (status == 2) {
-        $(".status").html("<span class='text-color-red'>actif</span>");
-      } else {
+      let status = localStorage.getItem("susbscription_status");
+      let profilePhoto = localStorage.getItem("profilePhoto");
+
+      if (status == 0) {
         $(".status").html("<span class='text-color-yellow'>non actif</span>");
+      } else {
+        $(".status").html("<span class='text-color-green'>actif</span>");
       }
+
       $(".username").html(firstname + " " + lastname);
+
+      if (userType == "dri") {
+        $(".driver-bloc").show();
+        $(".passenger-bloc").hide();
+      } else {
+        $(".driver-bloc").hide();
+        $(".passenger-bloc").show();
+      }
+
+      if (
+        profilePhoto == null ||
+        profilePhoto == undefined ||
+        profilePhoto == "undefined" ||
+        profilePhoto == "" ||
+        profilePhoto == "null"
+      ) {
+        $("#profilePhoto").attr("src", "img/img5.png");
+      } else {
+        $("#profilePhoto").attr("src", apiUrl + "/api/images/" + profilePhoto);
+      }
+
+      popupSwipeHandler = $f7.sheet.create({
+        el: ".demo-sheet-push",
+        swipeToClose: true,
+        push: true,
+        backdrop: true,
+      });
     });
+    // const openMap = () => {
+    //   window.open(
+    //     "https://www.google.com/maps/search/?api=1&query=" +
+    //       lat +
+    //       "," +
+    //       lng +
+    //       "",
+    //     "_system"
+    //   );
+    // };
+
+    const scanCode = () => {
+      if (iscontact == 1) {
+        cordova.plugins.barcodeScanner.scan(
+          function (result) {
+            console.log(
+              "We got a barcode\n" +
+                "Result: " +
+                result.text +
+                "\n" +
+                "Format: " +
+                result.format +
+                "\n" +
+                "Cancelled: " +
+                result.cancelled
+            );
+            if (result.cancelled === true) {
+              toastTop = $f7.toast.create({
+                text: "Vous avez annulé le scan !",
+                position: "top",
+                cssClass: "toast_warning",
+                closeTimeout: 3000,
+              });
+              toastTop.open();
+            } else {
+              let str = result.text.split("-");
+              const driver = str[1];
+              localStorage.setItem("driver", driver);
+              app.views.main.router.navigate("/driver-profile/");
+            }
+          },
+          function (error) {
+            toastTop = $f7.toast.create({
+              text: "Scanning failed: " + error,
+              position: "top",
+              cssClass: "toast_red",
+              closeTimeout: 3000,
+            });
+            toastTop.open();
+            //alert("Scanning failed: " + error);
+          },
+          {
+            preferFrontCamera: false, // iOS and Android
+            showFlipCameraButton: true, // iOS and Android
+            showTorchButton: true, // iOS and Android
+            torchOn: false, // Android, launch with the torch switched on (if available)
+            saveHistory: true, // Android, save scan history (default false)
+            prompt: "Place a barcode inside the scan area", // Android
+            resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+            orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false, // iOS and Android
+          }
+        );
+      } else {
+        toastTop = $f7.toast.create({
+          text: "Vous n'avez aucun contact d'urgence enregistré ! Prière d'enregistrer au moins 1 contact avant de scanner.",
+          position: "top",
+          cssClass: "toast_info",
+          closeTimeout: 3000,
+        });
+        toastTop.open();
+        app.views.main.router.navigate("/add-contact/");
+      }
+    };
 
     // Événement de capture de photo
     const capturePhoto = () => {
       navigator.camera.getPicture(onSuccess, onFail, {
         quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,
       });
 
       function onSuccess(imageURI) {
-        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+        var image = document.getElementById("imagePreview5");
+        image.src = "data:image/jpeg;base64," + imageURI;
       }
 
       function onFail(message) {
@@ -225,12 +379,13 @@
     const chooseFromGallery = () => {
       navigator.camera.getPicture(onSuccess, onFail, {
         quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       });
 
       function onSuccess(imageURI) {
-        $("#imagePreview").html('<img src="' + imageURI + '" width="100%">');
+        var image = document.getElementById("imagePreview5");
+        image.src = "data:image/jpeg;base64," + imageURI;
       }
 
       function onFail(message) {
@@ -240,7 +395,9 @@
 
     // Événement de téléchargement de photo
     const uploadPhoto = () => {
-      var imageURI = $("#imagePreview img").attr("src");
+      var imageURI = $("#imagePreview5").attr("src");
+      let userId = localStorage.getItem("userId");
+      //alert(imageURI);
 
       if (!imageURI) {
         app.dialog.alert("Veuillez d'abord choisir une photo");
@@ -250,33 +407,62 @@
       // Afficher l'indicateur de chargement
       var loader = app.dialog.progress("Téléchargement en cours...", 0);
 
-      var formData = new FormData();
-      formData.append("photo", imageURI);
+      // Convertir l'URI de l'image en données binaires
+      fetch(imageURI)
+        .then((response) => response.blob())
+        .then((blob) => {
+          var formData = new FormData();
+          formData.append("image", blob, "image.jpg");
+          formData.append("userId", userId);
 
-      fetch(apiUrl + "/api/user/uploadphoto", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          // Cacher l'indicateur de chargement une fois la réponse reçue
-          loader.close();
+          fetch(apiUrl + "/api/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              // Cacher l'indicateur de chargement une fois la réponse reçue
+              loader.close();
 
-          if (!response.ok) {
-            throw new Error("Erreur HTTP, statut " + response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          app.dialog.alert(
-            "Photo téléversée avec succès. Chemin de l'image : " + data.path
-          );
+              if (!response.ok) {
+                throw new Error("Erreur HTTP, statut " + response.status);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("response", data);
+              toastTop = $f7.toast.create({
+                text: "Photo téléversée avec succès !",
+                position: "top",
+                cssClass: "toast_green",
+                closeTimeout: 3000,
+              });
+
+              // Open it
+              toastTop.open();
+              let path = data.path;
+
+              let str = path.split("public/");
+              localStorage.setItem("profilePhoto", str[1]);
+
+              $f7.popup.close();
+              app.views.main.router.navigate("/settings/");
+            })
+            .catch((error) => {
+              // Cacher l'indicateur de chargement en cas d'erreur
+              loader.close();
+
+              app.dialog.alert(
+                "Erreur lors du téléversement de la photo : " + error.message
+              );
+            });
         })
         .catch((error) => {
           // Cacher l'indicateur de chargement en cas d'erreur
           loader.close();
 
           app.dialog.alert(
-            "Erreur lors du téléversement de la photo : " + error.message
+            "Erreur lors de la récupération des données de l'image : " +
+              error.message
           );
         });
 
@@ -300,12 +486,25 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          userId: userId,
+        }),
       })
         .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
+          if (response.status === 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+          } else {
+            if (!response.ok) {
+              $f7.dialog.close();
+
+              throw new Error("Erreur HTTP, statut " + response.status);
+            }
           }
           return response.json();
         })
@@ -317,16 +516,19 @@
         })
         .catch((error) => {
           console.error("Error:", error);
+          localStorage.clear();
+          toastTop = $f7.toast.create({
+            text: "Votre session a expirée ! Vous serez déconnecté",
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+          app.views.main.router.navigate("/login/");
         });
     };
-
-    $onMounted(() => {
-      popupSwipeHandler = $f7.popup.create({
-        el: ".demo-popup-swipe-handler",
-        swipeToClose: "to-bottom",
-        swipeHandler: ".swipe-handler",
-      });
-    });
 
     $onBeforeUnmount(() => {
       // Destroy popup when page removed

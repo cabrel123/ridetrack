@@ -1,9 +1,10 @@
 <template>
   <div class="page page-login">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a class="link" href="/welcome/">
+          <a class="link" href="/">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
@@ -14,7 +15,7 @@
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
 
         <form id="login-form" method="post">
@@ -73,7 +74,7 @@
               </li>
             </ul>
             <div class="block-footer text-align-center">
-              <a href="/forgot-password/">Mot de pass oublié ?</a>.
+              <a href="/forgot-password/">Mot de passe oublié ?</a>.
             </div>
           </div>
         </form>
@@ -98,6 +99,7 @@
 <script>
   export default (props, { $f7, $theme, $on, $f7router }) => {
     let toastTop;
+
     const signIn = (e) => {
       $f7.dialog.preloader("Un instant svp...");
       // Récupérer l'élément formulaire
@@ -166,6 +168,7 @@
         })
         .then(function (data) {
           $f7.dialog.close();
+          console.log("data", data);
 
           // Traiter la réponse de l'API (par exemple, afficher un message de succès)
           // Create toast
@@ -180,22 +183,27 @@
           // Open it
           toastTop.open();
 
-          localStorage.setItem("userId", data.user[0].id);
-          localStorage.setItem("firstname", data.user[0].firstname);
-          localStorage.setItem("lastname", data.user[0].lastname);
-          localStorage.setItem("gender", data.user[0].gender);
-          localStorage.setItem("dateofbirth", data.user[0].dateofbirth);
-          localStorage.setItem("status", data.user[0].status);
-          localStorage.setItem("townName", data.user[0].townName);
-          localStorage.setItem("town_id", data.user[0].town_id);
-          localStorage.setItem("districtName", data.user[0].districtName);
-          localStorage.setItem("profilePhoto", data.user[0].profilePhoto);
-          localStorage.setItem("cniRecto", data.user[0].cni_recto);
-          localStorage.setItem("cniVerso", data.user[0].cni_verso);
-          localStorage.setItem("type", data.user[0].type);
-          localStorage.setItem("status", data.user[0].status);
-          localStorage.setItem("phone", data.user[0].phone);
-          localStorage.setItem("email", data.user[0].email);
+          localStorage.setItem("userId", data.user.id);
+          localStorage.setItem("firstname", data.user.firstname);
+          localStorage.setItem("lastname", data.user.lastname);
+          localStorage.setItem("gender", data.user.gender);
+          localStorage.setItem("dateofbirth", data.user.dateofbirth);
+          localStorage.setItem("status", data.user.status);
+          localStorage.setItem("townName", data.user.townName);
+          localStorage.setItem("town_id", data.user.town_id);
+          localStorage.setItem("districtName", data.user.districtName);
+          localStorage.setItem("profilePhoto", data.user.profilePhoto);
+          localStorage.setItem("cniRecto", data.user.cni_recto);
+          localStorage.setItem("cniVerso", data.user.cni_verso);
+          localStorage.setItem("type", data.user.type);
+          localStorage.setItem(
+            "susbscription_status",
+            data.user.susbscription_status
+          );
+          localStorage.setItem("phone", data.user.phone);
+          localStorage.setItem("email", data.user.email);
+          localStorage.setItem("referal_code", data.user.referal_code);
+          localStorage.setItem("expired_date", data.user.expired_date);
           localStorage.setItem("token", data.accessToken);
 
           app.views.main.router.navigate("/home/");

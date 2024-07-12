@@ -1,6 +1,7 @@
 <template>
   <div class="page page-profile">
     <div class="navbar">
+      <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
           <a class="link back">
@@ -22,7 +23,7 @@
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
           <span class="img-profile">
-            <img src="img/img5.png" width="100" />
+            <img src="img/img5.png" class="img-round-100" id="profilePhoto" />
           </span>
 
           <h3 class="username"></h3>
@@ -92,7 +93,50 @@
                   </div>
                   <div class="item-after town"></div>
                 </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">link</i>
+                    <i class="icon material-icons md-only">share</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Code de parrainage</div>
+                    </div>
+                  </div>
+                  <div class="item-after referalcode"></div>
+                </li>
               </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <div class="block-title padding-half">Pièce d'identité</div>
+              <div class="block">
+                <div class="grid grid-cols-2 grid-gap">
+                  <div>
+                    <img
+                      src="img/front-of-id-card.png"
+                      id="frontcni"
+                      width="100"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src="img/front-of-id-card.png"
+                      id="backcni"
+                      width="100"
+                    />
+                  </div>
+                </div>
+
+                <a
+                  class="button button-fill button-round list-button color-black"
+                  @click="${uploadCni}"
+                  >Mettre à jour mon identité</a
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -113,17 +157,19 @@
     $on("pageInit", () => {
       let firstname = localStorage.getItem("firstname");
       let lastname = localStorage.getItem("lastname");
-      let status = localStorage.getItem("status");
+      let status = localStorage.getItem("susbscription_status");
       let phone = localStorage.getItem("phone");
       let email = localStorage.getItem("email");
       let townName = localStorage.getItem("townName");
       let gender = localStorage.getItem("gender");
-      if (status == 1) {
-        $(".status").html("<span class='text-color-green'>actif</span>");
-      } else if (status == 2) {
-        $(".status").html("<span class='text-color-red'>actif</span>");
-      } else {
+      let referal_code = localStorage.getItem("referal_code");
+      let profilePhoto = localStorage.getItem("profilePhoto");
+      let cni_recto = localStorage.getItem("cniRecto");
+      let cni_verso = localStorage.getItem("cniVerso");
+      if (status == 0) {
         $(".status").html("<span class='text-color-yellow'>non actif</span>");
+      } else {
+        $(".status").html("<span class='text-color-green'>actif</span>");
       }
       if (gender == 1) {
         $(".gender").html("Homme");
@@ -136,7 +182,49 @@
       $(".phone").html(phone);
       $(".email").html(email);
       $(".town").html(townName);
+      $(".referalcode").html(referal_code);
+
+      if (
+        profilePhoto == null ||
+        profilePhoto == undefined ||
+        profilePhoto == "undefined" ||
+        profilePhoto == "" ||
+        profilePhoto == "null"
+      ) {
+        $("#profilePhoto").attr("src", "img/img5.png");
+      } else {
+        $("#profilePhoto").attr("src", apiUrl + "/api/images/" + profilePhoto);
+      }
+
+      if (
+        cni_recto == null ||
+        cni_recto == undefined ||
+        cni_recto == "undefined" ||
+        cni_recto == "" ||
+        cni_recto == "null"
+      ) {
+        $("#frontcni").attr("src", "img/front-of-id-card.png");
+      } else {
+        $("#frontcni").attr("src", apiUrl + "/api/images/" + cni_recto);
+      }
+
+      if (
+        cni_verso == null ||
+        cni_verso == undefined ||
+        cni_verso == "undefined" ||
+        cni_verso == "" ||
+        cni_verso == "null"
+      ) {
+        $("#backcni").attr("src", "img/back-of-id-card.png");
+      } else {
+        $("#backcni").attr("src", apiUrl + "/api/images/" + cni_verso);
+      }
     });
+
+    const uploadCni = () => {
+      localStorage.setItem("update_cni", 1);
+      app.views.main.router.navigate("/identification1/");
+    };
 
     return $render;
   };

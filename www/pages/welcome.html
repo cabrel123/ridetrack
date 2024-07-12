@@ -3,23 +3,23 @@
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="assets/img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
-        <div class="block text-align-center">
-          <img src="assets/img/img2.png" />
+        <div class="block-img text-align-center">
+          <img src="img/img2.png" />
         </div>
 
         <h3 class="text-align-center">Prenez votre taxi en toute sécurité</h3>
         <p class="text-align-center block">
           <a
-            class="button button-fill button-round color-black"
+            class="button button-fill button-round list-button color-black"
             href="/check-registration/"
             >Créer un compte</a
           >
         </p>
         <p class="text-align-center block">
           <a
-            class="button button-fill button-round button-raised color-white"
+            class="button button-fill button-round list-button button-raised color-white"
             href="/login/"
             >Se Connecter</a
           >
@@ -32,19 +32,46 @@
   .page-welcome .page-content {
     padding-top: calc(
       var(--f7-page-navbar-offset, 0px) +
-        var(--f7-page-toolbar-top-offset, 172px) +
+        var(--f7-page-toolbar-top-offset, 132px) +
         var(--f7-page-subnavbar-offset, 0px) +
         var(--f7-page-searchbar-offset, 0px) +
         var(--f7-page-content-extra-padding-top, 0px)
     );
   }
+  .page-welcome .block-img img {
+    margin: 0 auto;
+    display: block;
+    max-width: 360px;
+  }
 </style>
 <script>
   export default (props, { $f7, $f7router, $on }) => {
-    $on("pageInit", () => {
-      console.log("welcome");
-    });
+    $on("pageBeforeIn", () => {
+      var token = localStorage.getItem("token");
 
+      // Vérifier si le token existe
+      if (token == null || token == undefined || token == "") {
+        app.views.main.router.navigate("/");
+      } else {
+        var step = localStorage.getItem("step");
+
+        if (step == 1) {
+          // Redirigez vers la page par défaut si la page actuelle est la page par défaut
+          app.views.main.router.navigate("/verify-phone/");
+        } else if (step == 2) {
+          // Redirigez vers la page par défaut si la page actuelle est la page par défaut
+          app.views.main.router.navigate("/register-2/");
+        } else if (step == 3) {
+          // Redirigez vers la page par défaut si la page actuelle est la page par défaut
+          app.views.main.router.navigate("/profile-photo/");
+        } else if (step == 4) {
+          // Redirigez vers la page par défaut si la page actuelle est la page par défaut
+          app.views.main.router.navigate("/identification1");
+        } else {
+          app.views.main.router.navigate("/home/");
+        }
+      }
+    });
     return $render;
   };
 </script>

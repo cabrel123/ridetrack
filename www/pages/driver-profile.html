@@ -1,0 +1,636 @@
+<template>
+  <div class="page page-profile">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title" tkey="DRIVER_PROFILE">Profil du chauffeur</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="block block-strong-ios block-outline-ios driverInfo">
+        <div class="block text-align-center">
+          <div class="grid grid-gap img-profile">
+            <img src="img/img5.png" id="profilePhoto" class="img-round-150" />
+            <img
+              src="img/img5.png"
+              id="mercenaryPhoto"
+              class="img-round-150"
+              style="display: none"
+            />
+          </div>
+          <h4
+            id="mercenaryText"
+            class="text-color-red"
+            style="display: none"
+            tkey="IT_MERCENARY"
+          >
+            IL s'agit du mercenaire qui est dans la voiture actuellement
+          </h4>
+          <h4>Notation : <span class="rating">0</span>/5</h4>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <ul>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">person</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="LASTNAME">Nom(s)</div>
+                    </div>
+                  </div>
+                  <div class="item-after username"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">phone</i>
+                    <i class="icon material-icons md-only">call</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="PHONE">Téléphone</div>
+                    </div>
+                  </div>
+                  <div class="item-after phone"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">at</i>
+                    <i class="icon material-icons md-only">pin_drop</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">E-mail</div>
+                    </div>
+                  </div>
+                  <div class="item-after email"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">rosette</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="GENDER">Sexe</div>
+                    </div>
+                  </div>
+                  <div class="item-after gender"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">map</i>
+                    <i class="icon material-icons md-only">location_on</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="TOWN">Ville</div>
+                    </div>
+                  </div>
+                  <div class="item-after town"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">creditcard</i>
+                    <i class="icon material-icons md-only">credit_card</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="CAPACITY_NUMBER">
+                        N° de capacité
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after capacitynumber"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">creditcard</i>
+                    <i class="icon material-icons md-only">credit_card</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="DRIVER_LICENCE_NUMBER">
+                        N° du permis
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after driverlicence"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">link</i>
+                    <i class="icon material-icons md-only">share</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="SHARING_CODE">
+                        Code de parrainage
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after referalcode"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <ul>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">info_circle</i>
+                    <i class="icon material-icons md-only">info_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="IMMATRICULATION_NUMBER">
+                        N° d'immatriculation
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after immatriculationnumber"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">car_fill</i>
+                    <i class="icon material-icons md-only">directions_car</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="CAR_MODEL">
+                        Modèle de voiture
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after car"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">person</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="OWNER">Propriétaire</div>
+                    </div>
+                  </div>
+                  <div class="item-after owner"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-color-lime" id="mercenary" style="display: none">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <div class="block-title padding-half" tkey="MERCENARY_INFO">
+                Informations du mercenaire
+              </div>
+              <ul>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">person</i>
+                    <i class="icon material-icons md-only">person_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="LASTNAME">Nom(s)</div>
+                    </div>
+                  </div>
+                  <div class="item-after mercenaryname"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">phone</i>
+                    <i class="icon material-icons md-only">call</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="PHONE_NUMBER">
+                        N° téléphone
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after mercenaryphone"></div>
+                </li>
+                <li class="item-content">
+                  <div class="item-media">
+                    <i class="icon f7-icons if-not-md">info_circle</i>
+                    <i class="icon material-icons md-only">info_outline</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title" tkey="DRIVER_LICENCE_NUMBER">
+                        N° du permis
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-after mercenarydriverlicence"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="list media-list no-safe-areas">
+              <div class="block-title padding-half" tkey="IDENTITY_TOOLS">
+                Pièce d'identité
+              </div>
+              <div class="block">
+                <div class="grid grid-cols-2 grid-gap">
+                  <div>
+                    <img
+                      src="img/front-of-id-card.png"
+                      id="frontcni"
+                      width="100"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src="img/front-of-id-card.png"
+                      id="backcni"
+                      width="100"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-align-center block margin-bottom-20 bg-transparent">
+          <a
+            class="button button-fill button-round list-button color-yellow"
+            @click="${openMap}"
+            tkey="START_TRACKING"
+            >Lancer le tracking</a
+          >
+        </p>
+        <p class="text-align-center block margin-bottom-20 bg-transparent">
+          <a
+            class="button button-fill button-round list-button button-raised color-black rating_link"
+            href="/rating/"
+            tkey="RATING_DRIVER"
+            >Noter le chauffeur</a
+          >
+        </p>
+        <p class="text-align-center block margin-bottom-20 bg-transparent">
+          <a
+            class="button button-fill button-round list-button button-raised color-red"
+            href="/alert/"
+            tkey="SIGNAL_A_PROBLEM"
+            >Signaler un problème</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .margin-bottom-20 {
+    margin-bottom: 20px;
+  }
+</style>
+<script>
+  export default (props, { $, $f7, $on, $f7router }) => {
+    let userId = localStorage.getItem("driver");
+    let userlat = localStorage.getItem("userlat");
+    let userlng = localStorage.getItem("userlng");
+    let accountId = localStorage.getItem("userId");
+    let toastTop;
+
+    $on("pageInit", () => {
+      //driverProfile();
+      //driverRating();
+      checkSubscriptionStatus();
+      $(".rating_link").attr("href", "/rating/" + userId + "/");
+    });
+
+    const openMap = () => {
+      window.open(
+        "https://www.google.com/maps/search/?api=1&query=" +
+          userlat +
+          "," +
+          userlng +
+          "",
+        "_system"
+      );
+    };
+
+    const checkSubscriptionStatus = () => {
+      // Make a GET request using the Fetch API
+
+      fetch(apiUrl + "/api/subscription/check/" + accountId)
+        .then((response) => {
+          if (response.status == 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+            app.views.main.router.navigate("/subscription/");
+          } else {
+            if (!response.ok) {
+              $f7.dialog.close();
+
+              throw new Error("Erreur HTTP, statut " + response.status);
+              app.views.main.router.navigate("/subscription/");
+            }
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          driverProfile();
+          driverRating();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          toastTop = $f7.toast.create({
+            text: YOU_HAVE_ACCESS_TO_VIEW_DRIVER_INFO,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 5000,
+          });
+
+          // Open it
+          toastTop.open();
+          localStorage.setItem("susbscription_status", "0");
+          $f7.dialog
+            .create({
+              title: SUBSCRIPTION_EXPIRED,
+              text: DO_YOU_RENEW_IT,
+              buttons: [
+                {
+                  text: "Non",
+                },
+                {
+                  text: "Oui",
+                },
+              ],
+              onClick: function (dialog, index) {
+                if (index === 0) {
+                  //Button 1 clicked
+                  app.views.main.router.navigate("/home/");
+                } else if (index === 1) {
+                  //Button 2 clicked
+                  app.views.main.router.navigate("/subscription/");
+                }
+              },
+              verticalButtons: false,
+            })
+            .open();
+        });
+    };
+
+    const driverProfile = () => {
+      // Specify the API endpoint for user data
+      $f7.dialog.preloader("Un instant svp...");
+      let content = "";
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/drivers/infos/" + userId)
+        .then((response) => {
+          if (!response.ok) {
+            $f7.dialog.close();
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          var content = "";
+
+          var maxRow = data.length;
+
+          var i = "";
+          if (maxRow == 0) {
+            content += '<div class="card card-outline margin-top">';
+            content +=
+              '<div class="card-content card-content-padding">' +
+              EMPTY_INFO +
+              "</div>";
+            content += "</div>";
+            $(".driverInfo").html(content);
+            $f7.dialog.close();
+          } else {
+            for (i = 0; i < maxRow; i++) {
+              if (data[i]["gender"] == 1) {
+                $(".gender").html(MAN);
+              } else if (data[i]["gender"] == 2) {
+                $(".gender").html(WOMAN);
+              } else {
+                $(".gender").html(UNDEFINED);
+              }
+              $(".username").html(
+                data[i]["firstname"] + " " + data[i]["lastname"]
+              );
+              $(".phone").html(data[i]["phone"]);
+              $(".email").html(data[i]["email"]);
+              $(".town").html(data[i]["townName"]);
+              $(".referalcode").html(data[i]["referal_code"]);
+              $(".capacitynumber").html(data[i]["driver_capacity"]);
+              $(".car").html(data[i]["car"]);
+              $(".driverlicence").html(data[i]["driver_licence"]);
+              $(".immatriculationnumber").html(
+                data[i]["immatriculation_number"]
+              );
+              if (data[i]["owner_name"] == data[i]["firstname"]) {
+                $(".owner").html(YES);
+              } else {
+                $(".owner").html(
+                  data[i]["owner_name"] + " " + data[i]["owner_phone"]
+                );
+              }
+
+              if (data[i]["is_mercenary_validate"] == 1) {
+                $("#mercenary").show();
+                $(".mercenaryname").html(data[i]["mercenary_name"]);
+                $(".mercenaryphone").html(data[i]["mercenary_phone"]);
+                $(".mercenarydriverlicence").html(data[i]["mercenary_licence"]);
+                $(".img-profile").addClass("grid-cols-2");
+                $("#mercenaryPhoto").show();
+                $("#mercenaryText").show();
+                $("#mercenaryPhoto").attr(
+                  "src",
+                  apiUrl + "/api/images/" + data[i]["mercenaryPhoto"]
+                );
+              } else {
+                $("#mercenary").hide();
+                $("#mercenaryText").hide();
+                $(".img-profile").removeClass("grid-cols-2");
+              }
+
+              if (
+                data[i]["profilePhoto"] == null ||
+                data[i]["profilePhoto"] == undefined ||
+                data[i]["profilePhoto"] == "undefined" ||
+                data[i]["profilePhoto"] == "" ||
+                data[i]["profilePhoto"] == "null"
+              ) {
+                $("#profilePhoto").attr("src", "img/img5.png");
+              } else {
+                $("#profilePhoto").attr(
+                  "src",
+                  apiUrl + "/api/images/" + data[i]["profilePhoto"]
+                );
+              }
+
+              if (
+                data[i]["cni_recto"] == null ||
+                data[i]["cni_recto"] == undefined ||
+                data[i]["cni_recto"] == "undefined" ||
+                data[i]["cni_recto"] == "" ||
+                data[i]["cni_recto"] == "null"
+              ) {
+                $("#frontcni").attr("src", "img/front-of-id-card.png");
+              } else {
+                $("#frontcni").attr(
+                  "src",
+                  apiUrl + "/api/images/" + data[i]["cni_recto"]
+                );
+              }
+
+              if (
+                data[i]["cni_verso"] == null ||
+                data[i]["cni_verso"] == undefined ||
+                data[i]["cni_verso"] == "undefined" ||
+                data[i]["cni_verso"] == "" ||
+                data[i]["cni_verso"] == "null"
+              ) {
+                $("#backcni").attr("src", "img/back-of-id-card.png");
+              } else {
+                $("#backcni").attr(
+                  "src",
+                  apiUrl + "/api/images/" + data[i]["cni_verso"]
+                );
+              }
+            }
+            $f7.dialog.close();
+            sendNotification();
+          }
+        })
+        .catch((error) => {
+          $f7.dialog.close();
+          console.error("Error:", error);
+        });
+    };
+
+    const sendNotification = () => {
+      let userlat = localStorage.getItem("userlat");
+      let userlng = localStorage.getItem("userlng");
+      let passenger = localStorage.getItem("userId");
+
+      // Envoyer la requête POST à l'API
+      fetch(apiUrl + "/api/logs/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          lat: userlat,
+          lng: userlng,
+          driver: userId,
+          passenger: passenger,
+        }),
+      })
+        .then(function (response) {
+          $f7.dialog.close();
+          if (response.status === 401) {
+            return response.json().then((data) => {
+              throw new Error(data.message); // Lance une erreur avec le message de la réponse
+            });
+          } else {
+            if (!response.ok) {
+              throw new Error("Erreur HTTP, statut " + response.status);
+            }
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          $f7.dialog.close();
+          toastTop = $f7.toast.create({
+            text: NOTIFICATION_SUCCESSFULL_SEND,
+            position: "top",
+            cssClass: "toast_info",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        })
+        .catch(function (error) {
+          $f7.dialog.close();
+          // Gérer les erreurs (par exemple, afficher un message d'erreur)
+          console.error("Erreur lors de la requête:", error);
+          toastTop = $f7.toast.create({
+            text: error,
+            position: "top",
+            cssClass: "toast_red",
+            closeTimeout: 3000,
+          });
+
+          // Open it
+          toastTop.open();
+        });
+    };
+
+    const driverRating = () => {
+      // Specify the API endpoint for user data
+
+      let content = "";
+      let driver = localStorage.getItem("driver");
+
+      // Make a GET request using the Fetch API
+      fetch(apiUrl + "/api/rating/driver/" + driver)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Process the retrieved user data
+
+          var content = "";
+
+          var maxRow = data.length;
+
+          var i = "";
+          let totalRating = 0;
+          if (maxRow == 0) {
+            $(".rating").html(maxRow);
+          } else {
+            for (i = 0; i < maxRow; i++) {
+              totalRating = totalRating + data[i]["score"];
+            }
+            $(".rating").html(totalRating / maxRow);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    return $render;
+  };
+</script>

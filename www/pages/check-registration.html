@@ -1,25 +1,39 @@
 <template>
   <div class="page no-toolbar no-navbar no-swipeback page-welcome">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link" href="/">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title"></div>
+      </div>
+    </div>
     <div class="page-content">
       <div class="block block-strong-ios block-outline-ios">
         <div class="block text-align-center">
-          <img src="img/logo.png" />
+          <img src="img/logo.png" class="img-300" />
         </div>
 
-        <h3 class="text-align-center">
+        <h3 class="text-align-center" tkey="WHICH_ACCOUNT_TO_CREATE">
           Quel type de compte voulez-vous créer ?
         </h3>
         <p class="text-align-center block">
           <a
-            class="button button-fill button-round color-black"
+            class="button button-fill button-round list-button color-black"
             href="/register/"
+            tkey="PASSENGER"
             >Passager</a
           >
         </p>
         <p class="text-align-center block">
           <a
-            class="button button-fill button-round button-raised color-white"
+            class="button button-fill button-round list-button button-raised color-white"
             href="/enrollement1/"
+            tkey="DRIVER"
             >Chauffeur</a
           >
         </p>
